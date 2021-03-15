@@ -1,0 +1,62 @@
+{
+  "name": "next-starter-kit",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ./ --ext ts,js,tsx,jsx",
+    "lint:fix": "eslint ./ --ext ts,js,tsx,jsx --fix",
+    "lint:cache": "eslint ./ --ext ts,js,tsx,jsx --cache --fix",
+    "format": "prettier 'src/**/*.{js,jsx,ts,tsx,json,css}' --write",
+    "type-check": "tsc",
+    "test": "jest",
+    "test:watch": "jest --verbose --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "@testing-library/dom": "^7.30.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@types/jest": "^26.0.20",
+    "babel-jest": "^26.6.3",
+    "next": "10.0.8",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/ui": "^0.3.0",
+    "@types/node": "^12.12.21",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
+    "autoprefixer": "^10.2.4",
+    "eslint": "^7.21.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "4.3.8",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.4",
+    "postcss": "^8.2.7",
+    "prettier": "^2.2.1",
+    "tailwindcss": "^2.0.3",
+    "typescript": "4.0"
+  },
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "jest"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint . --fix",
+      "prettier --write"
+    ]
+  }
+}

@@ -1,5 +1,6 @@
-import React from 'react'
 import { Transition } from '@headlessui/react'
+import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   onClose: () => void
@@ -11,7 +12,13 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 const Modal = React.forwardRef<HTMLDivElement, Props>(function Modal(props, ref) {
   const { children, onClose, isOpen, className = '', style = {}, ...other } = props
 
-  return (
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const modalComponent = (
     <Transition show={isOpen}>
       <Transition.Child
         enter="transition ease-out duration-150"
@@ -43,6 +50,8 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(function Modal(props, ref)
       </Transition.Child>
     </Transition>
   )
+
+  return mounted ? createPortal(modalComponent, document.body) : null
 })
 
 export default Modal

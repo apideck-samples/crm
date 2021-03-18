@@ -21,8 +21,9 @@ const VaultSessionButton: FC = () => {
 
   return (
     <Button
-      text="Add connection"
-      className="inline-flex ml-3"
+      text="Integration settings"
+      className="w-full"
+      variant="outline"
       isLoading={isLoading}
       onClick={() => redirectToVault()}
     />

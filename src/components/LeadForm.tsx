@@ -1,8 +1,7 @@
 import { Button, TextInput } from '@apideck/components'
 import { useEffect, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
-
-import { Lead } from 'types/lead'
+import { Lead } from 'types/Lead'
 import { useModal } from 'utils/useModal'
 
 interface Props {
@@ -74,17 +73,14 @@ const LeadForm = ({ defaultValues }: Props) => {
     setError(null)
     createOrUpdateLead(values)
       .then((response: { data: Lead; error: { message: string } }) => {
-        console.log(response)
-        const { error, data } = response
+        const { error } = response
         if (error) {
           return setError(error?.message)
         } else {
-          console.log(data)
-          // removeModal()
+          removeModal()
         }
       })
       .catch((error: { message: string }) => {
-        console.log(error)
         setError(error.message)
       })
       .finally(() => setIsLoading(false))

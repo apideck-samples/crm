@@ -1,6 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+const config = require('@apideck/components/tailwind-config')
 
-module.exports = {
+module.exports = config({
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   darkMode: false,
   theme: {
@@ -50,4 +51,4 @@ module.exports = {
       ])
     }
   ]
-}
+})

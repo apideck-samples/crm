@@ -1,7 +1,8 @@
 import ErrorMessage from 'components/ErrorMessage'
 import Leads from 'components/Leads'
-import PageHeading from 'components/PageHeading'
-import SidebarLayout from 'components/SidebarLayout'
+import Navbar from 'components/Navbar'
+import PageHeader from 'components/PageHeader'
+import SelectConnection from 'components/SelectConnection'
 import { NextPage } from 'next'
 import { useConnector } from 'utils/useConnector'
 import { useLeads } from 'utils/useLeads'
@@ -15,17 +16,28 @@ const IndexPage: NextPage = () => {
 
   return (
     <Layout title={`CRM | ${connection?.name}`}>
-      <SidebarLayout>
-        <div className="max-w-5xl p-6 mx-auto mt-6">
-          <PageHeading title="Leads" showButton={!leads?.error && !isError} />
-          <br />
-          {(leads?.error || isError) && (
-            <ErrorMessage error={leads?.error} message={leads?.message} />
-          )}
-          {/* {isLoading && <Spinner />} */}
-          <Leads />
+      <Navbar />
+      <PageHeader title={'Leads'}>
+        <div className="flex flex-shrink-0 mt-4 md:mt-0 md:ml-4">
+          <span className="rounded-md shadow-sm">
+            <SelectConnection />
+          </span>
         </div>
-      </SidebarLayout>
+      </PageHeader>
+
+      {/* <SidebarLayout> */}
+
+      <div className="pl-2 mx-auto mt-6 mb-12 max-w-7xl sm:px-6 lg:px-8">
+        {/* <PageHeading title="Leads" showButton={!leads?.error && !isError} /> */}
+        <br />
+        {(leads?.error || isError) && (
+          <ErrorMessage error={leads?.error} message={leads?.message} />
+        )}
+        {/* {isLoading && <Spinner />} */}
+        <Leads />
+      </div>
+
+      {/* </SidebarLayout> */}
     </Layout>
   )
 }

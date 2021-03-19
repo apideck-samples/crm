@@ -22,8 +22,8 @@ const VaultSessionButton: FC = () => {
   return (
     <Button
       text="Integration settings"
-      className="w-full"
       variant="outline"
+      className="w-full"
       isLoading={isLoading}
       onClick={() => redirectToVault()}
     />

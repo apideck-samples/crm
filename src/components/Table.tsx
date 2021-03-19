@@ -15,17 +15,17 @@ const Table = ({ columns, data }: Props) => {
     },
     useSortBy
   )
-
   const { addModal } = useModal()
+
   return (
-    <table className="min-w-full divide-y divide-gray-200">
-      <thead className="bg-gray-50">
+    <table className="min-w-full divide-y divide-cool-gray-200">
+      <thead className="">
         {headerGroups.map((headerGroup: any, i: number) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={`headerGroup${i}`}>
             {headerGroup.headers.map((column: any, i: number) => (
               <th
                 key={`column-${i}`}
-                className="px-6 py-3 text-xs font-medium tracking-wide text-left text-gray-500 uppercase"
+                className="py-3 space-x-6 text-xs font-medium tracking-wide text-left text-gray-500 uppercase"
                 {...column.getHeaderProps(column.getSortByToggleProps())}
               >
                 {column.render('Header')}
@@ -48,18 +48,18 @@ const Table = ({ columns, data }: Props) => {
               {row.cells.map((cell: any, i: number) => {
                 return (
                   <td
-                    className="px-6 py-4 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
+                    className="py-4 space-x-6 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
                     {...cell.getCellProps()}
                     key={`cell-${i}`}
-                    style={{ maxWidth: 250 }}
+                    // style={{ maxWidth: 150 }}
                   >
                     {cell.render('Cell')}
                   </td>
                 )
               })}
-              <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+              <td className="py-4 text-sm font-medium text-right whitespace-nowrap">
                 <button
-                  className="font-semibold text-indigo-600 cursor-pointer hover:text-indigo-900"
+                  className="font-semibold text-blue-600 cursor-pointer hover:text-blue-900"
                   onClick={() =>
                     addModal(<LeadForm defaultValues={row.original} />, {
                       style: { maxWidth: 480 }

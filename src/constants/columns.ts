@@ -16,7 +16,7 @@ export const columns = [
     accessor: 'phone'
   },
   {
-    Header: 'Status',
-    accessor: 'status'
+    Header: 'Date added',
+    accessor: 'created_at'
   }
 ]

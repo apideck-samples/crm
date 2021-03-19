@@ -10,21 +10,29 @@ import LoadingTable from './LoadingTable'
 
 const Leads: FC = () => {
   const { leads, nextPage, prevPage, hasNextPage, hasPrevPage, isLoading } = useLeads()
-  const prevStatusCode = usePrevious(leads?.status_code)
+  const statusCode = leads?.status_code
+  const hasLeads = leads?.data?.length
+  const prevStatusCode = usePrevious(statusCode)
   const { addToast } = useToast()
-  const hasLeads = hasLeads
 
   const mappedData = leads?.data?.map((lead: Lead) => {
     const data = {
       ...lead,
       email: lead.emails?.length ? lead.emails[0].email : '',
-      phone: lead.phone_numbers?.length ? lead.phone_numbers[0].number : ''
+      phone: lead.phone_numbers?.length ? lead.phone_numbers[0].number : '',
+      created_at: lead?.created_at
+        ? new Date(lead.created_at).toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          })
+        : ''
     }
     return data
   })
 
   useEffect(() => {
-    if ((prevStatusCode !== leads?.status_code && leads?.status_code) === 402) {
+    if ((prevStatusCode !== statusCode && statusCode) === 402) {
       addToast({
         title: leads.message,
         description: leads.detail,
@@ -35,11 +43,11 @@ const Leads: FC = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="-my-2 overflow-x-auto rounded-lg shadow sm:-mx-6 lg:-mx-8">
+      <div className="-my-2 overflow-x-auto rounded-lg">
         {isLoading && <LoadingTable />}
         {!isLoading && hasLeads && <Table columns={columns} data={mappedData} />}
-        {hasLeads && (
-          <div className="flex flex-row-reverse p-4 border-gray-200 bg-gray-50">
+        {(hasLeads || isLoading) && (
+          <div className="flex flex-row-reverse py-4 border-gray-200">
             {hasNextPage && (
               <Button
                 onClick={() => nextPage()}

@@ -48,9 +48,10 @@ const Table = ({ columns, data }: Props) => {
               {row.cells.map((cell: any, i: number) => {
                 return (
                   <td
-                    className="max-w-sm px-6 py-4 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
+                    className="px-6 py-4 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
                     {...cell.getCellProps()}
                     key={`cell-${i}`}
+                    style={{ maxWidth: 250 }}
                   >
                     {cell.render('Cell')}
                   </td>

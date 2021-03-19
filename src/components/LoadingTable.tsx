@@ -26,17 +26,18 @@ const LoadingTable = () => {
           <tr key={i}>
             {columns.map((_, i) => (
               <td
-                className="max-w-sm px-6 py-4 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
+                className="px-6 py-4 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
                 key={`cell-${i}`}
+                style={{ maxWidth: 250 }}
               >
-                Loading
+                <span className="px-12 py-0 bg-gray-200 rounded-sm animate-pulse"></span>
               </td>
             ))}
             <td
-              className="max-w-sm px-6 py-4 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
+              className="max-w-xs px-2 py-4 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
               key={`cell-${i}`}
             >
-              Loading
+              <span className="px-4 py-0 bg-gray-200 rounded-sm animate-pulse"></span>
             </td>
           </tr>
         ))}

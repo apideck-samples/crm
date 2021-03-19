@@ -26,20 +26,14 @@ const Leads: FC = () => {
           {!isLoading && <Table columns={columns} data={mappedData} />}
         </div>
         <div className="flex flex-row-reverse p-4 border-gray-200 bg-gray-50">
-          <Button
-            onClick={() => nextPage()}
-            text="Next"
-            className="ml-2"
-            isLoading={isLoading}
-            disabled={!hasNextPage}
-          />
+          {hasNextPage && (
+            <Button onClick={() => nextPage()} text="Next" className="ml-2" isLoading={isLoading} />
+          )}
 
-          <Button
-            onClick={() => prevPage()}
-            text="Previous"
-            isLoading={isLoading}
-            disabled={!hasPrevPage}
-          />
+          {hasPrevPage && (
+            <Button onClick={() => prevPage()} text="Previous" isLoading={isLoading} />
+          )}
+          {isLoading && <Button disabled={true} text="Loading" isLoading={isLoading} />}
         </div>
       </div>
     </div>

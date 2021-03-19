@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Lead } from 'types/Lead'
 import { useModal } from 'utils/useModal'
+import { useToast } from 'utils/useToast'
 
 interface Props {
   defaultValues?: Lead
@@ -12,6 +13,7 @@ const LeadForm = ({ defaultValues }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const { removeModal } = useModal()
+  const { addToast } = useToast()
   const { register, control, errors, handleSubmit, setValue } = useForm({
     defaultValues
   })
@@ -72,16 +74,21 @@ const LeadForm = ({ defaultValues }: Props) => {
     setIsLoading(true)
     setError(null)
     createOrUpdateLead(values)
-      .then((response: { data: Lead; error: { message: string } }) => {
-        const { error } = response
-        if (error) {
-          return setError(error?.message)
+      .then((response: { data: Lead; error: string; message: string }) => {
+        const { error, message } = response
+        if (message || error) {
+          setError(message || error)
         } else {
           removeModal()
+          addToast({
+            title: `Successfully ${leadID ? 'updated' : 'created'}!`,
+            description: `${values.name} is successfully ${leadID ? 'updated' : 'added'}`,
+            type: 'success'
+          })
         }
       })
-      .catch((error: { message: string }) => {
-        setError(error.message)
+      .catch((error) => {
+        setError(error)
       })
       .finally(() => setIsLoading(false))
   }

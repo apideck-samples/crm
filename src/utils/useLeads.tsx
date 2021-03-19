@@ -5,10 +5,10 @@ import { usePrevious } from './usePrevious'
 import useSWR from 'swr'
 
 export const useLeads = () => {
-  const { connection } = useConnector()
   const [cursor, setCursor] = useState(null)
-
-  const prefServiceId = usePrevious(connection?.service_id)
+  const { connection } = useConnector()
+  const serviceId = connection?.service_id
+  const prevServiceId = usePrevious(serviceId)
 
   const fetcher = async (url: string) => {
     const response = await fetch(url)
@@ -16,19 +16,17 @@ export const useLeads = () => {
   }
 
   const cursorParams =
-    cursor && (!prefServiceId || prefServiceId === connection?.service_id)
-      ? `&cursor=${cursor}`
-      : ''
+    cursor && (!prevServiceId || prevServiceId === serviceId) ? `&cursor=${cursor}` : ''
   const { data, error, revalidate } = useSWR(
-    `/api/crm/leads/get?serviceId=${connection?.service_id || ''}${cursorParams}`,
+    `/api/crm/leads/get?serviceId=${serviceId || ''}${cursorParams}`,
     fetcher
   )
 
   useEffect(() => {
-    if (prefServiceId !== connection?.service_id) {
+    if (prevServiceId !== serviceId) {
       setCursor(null)
     }
-  }, [connection?.service_id, prefServiceId])
+  }, [serviceId, prevServiceId])
 
   const nextPage = () => {
     const nextCursor = data?.meta?.cursors?.next

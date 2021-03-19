@@ -83,7 +83,8 @@ const LeadForm = ({ defaultValues }: Props) => {
           addToast({
             title: `Successfully ${leadID ? 'updated' : 'created'}!`,
             description: `${values.name} is successfully ${leadID ? 'updated' : 'added'}`,
-            type: 'success'
+            type: 'success',
+            autoClose: true
           })
         }
       })

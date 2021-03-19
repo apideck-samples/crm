@@ -3,4 +3,5 @@ export interface Toast {
   description: string
   type?: 'success' | 'warning' | 'error'
   id?: number
+  autoClose?: boolean
 }

@@ -17,16 +17,18 @@ const ToastComponent: React.FC<Props> = ({ toast }) => {
   }, [])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShouldShow(false)
-      setTimeout(() => {
-        removeToast(toast.id)
-      }, 300)
-    }, 3500)
-    return () => {
-      clearTimeout(timer)
+    if (toast.autoClose) {
+      const timer = setTimeout(() => {
+        setShouldShow(false)
+        setTimeout(() => {
+          removeToast(toast.id)
+        }, 300)
+      }, 3500)
+      return () => {
+        clearTimeout(timer)
+      }
     }
-  }, [toast.id, removeToast])
+  }, [toast.id, removeToast, toast.autoClose])
 
   const icon = () => {
     switch (toast.type) {
@@ -116,7 +118,7 @@ const ToastComponent: React.FC<Props> = ({ toast }) => {
         leave="transition ease-in duration-200"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
-        className={`w-full max-w-sm bg-white border-l-2 border-green-400 rounded-md shadow-lg pointer-events-auto ${
+        className={`w-full max-w-sm bg-white border-l-2 rounded-md shadow-lg pointer-events-auto ${
           toast.type ? borderStyle[toast.type] : 'border-indigo-400'
         }`}
       >

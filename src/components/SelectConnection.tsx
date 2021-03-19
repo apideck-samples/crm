@@ -14,16 +14,13 @@ const SelectConnection = () => {
     return await response.json()
   }
 
-  const { data } = useSWR(`/api/vault/connections`, getConnections)
-
-  let connections: Connection[]
-  if (data?.data?.length) {
-    connections = data.data.filter((connection: Connection) => connection.unified_api === 'crm')
-  }
+  const { data: connections } = useSWR(`/api/vault/connections`, getConnections)
 
   useEffect(() => {
-    if (leads?.service && connections && !connection) {
-      const connector = connections.find((connection) => connection.service_id === leads?.service)
+    if (leads?.service && connections?.data?.length && !connection) {
+      const connector = connections.data.find(
+        (connection: Connection) => connection.service_id === leads?.service
+      )
       setConnection(connector)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +64,7 @@ const SelectConnection = () => {
                   className="absolute left-0 z-10 w-full mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                 >
                   <div className="py-1">
-                    {connections?.map((connection, i) => {
+                    {connections?.data?.map((connection: Connection, i: number) => {
                       return (
                         <Menu.Item key={i}>
                           {({ active }) => (
@@ -124,7 +121,7 @@ const SelectConnection = () => {
               </span>
             </span>
             <svg
-              className="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+              className="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"

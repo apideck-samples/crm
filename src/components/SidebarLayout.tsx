@@ -18,7 +18,7 @@ const SidebarLayout: NextPage<Props> = ({ children }) => {
   useOnClickOutside(ref, () => setSidebarOpen(false))
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-100">
+    <div className="flex h-screen bg-gray-100">
       {/* Sidebar for mobile. */}
       <div className="md:hidden">
         <div className={`fixed flex inset-0 ${sidebarOpen && 'z-40 '}`}>
@@ -188,7 +188,7 @@ const SidebarLayout: NextPage<Props> = ({ children }) => {
           </div>
         </div>
       </div>
-      <div className="sticky flex flex-col flex-1 w-0 overflow-hidden">
+      <div className="sticky flex flex-col flex-1 w-0 overflow-y-scroll">
         <div className="absolute z-20 pt-1 pl-1 md:hidden sm:pl-3 sm:pt-3 top-1 left-1">
           <button
             className={`-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-700 hover:text-indigo-900 focus:outline-none focus:bg-indigo-200 transition ease-in-out duration-150`}

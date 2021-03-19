@@ -160,7 +160,13 @@ const LeadForm = ({ defaultValues }: Props) => {
                 <TextInput
                   name={`emails[${index}].email`}
                   ref={register({ required: email.type === 'default' })}
-                  placeholder={`Email ${email.type === 'default' ? '(default)' : ''}`}
+                  placeholder={`Email ${email.type === 'default' ? '(default)' : '(other)'}`}
+                />
+                <input
+                  type="hidden"
+                  name={`emails[${index}].type`}
+                  value={email.type || 'other'}
+                  ref={register()}
                 />
                 {errors.emails?.length && errors.emails[index] && (
                   <div className="mt-2 text-xs text-red-600">
@@ -207,7 +213,15 @@ const LeadForm = ({ defaultValues }: Props) => {
                 <TextInput
                   name={`phone_numbers[${index}].number`}
                   ref={register({ required: phone.phone_type === 'default' })}
-                  placeholder={`Phone number ${phone.phone_type === 'default' ? '(default)' : ''}`}
+                  placeholder={`Phone number ${
+                    phone.phone_type === 'default' ? '(default)' : '(other)'
+                  }`}
+                />
+                <input
+                  type="hidden"
+                  name={`phone_numbers[${index}].phone_type`}
+                  value={phone.phone_type || 'other'}
+                  ref={register()}
                 />
                 {errors.phone_numbers?.length && errors.phone_numbers[index] && (
                   <div className="mt-2 text-xs text-red-600">

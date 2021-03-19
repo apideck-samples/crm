@@ -2,22 +2,16 @@ import ErrorMessage from 'components/ErrorMessage'
 import Leads from 'components/Leads'
 import PageHeading from 'components/PageHeading'
 import SidebarLayout from 'components/SidebarLayout'
-import Spinner from 'components/Spinner'
 import { NextPage } from 'next'
-import { useEffect } from 'react'
 import { useConnector } from 'utils/useConnector'
 import { useLeads } from 'utils/useLeads'
-import { usePrevious } from 'utils/usePrevious'
 import Layout from '../components/Layout'
 
 const IndexPage: NextPage = () => {
   const { connection } = useConnector()
-  const { leads, isLoading, isError, revalidate } = useLeads(connection?.service_id)
-  const prefServiceId = usePrevious(connection?.service_id)
+  const { leads, isError } = useLeads()
 
-  useEffect(() => {
-    if (prefServiceId !== connection?.service_id) revalidate()
-  }, [connection?.service_id, prefServiceId, revalidate])
+  console.log(leads?.data)
 
   return (
     <Layout title={`CRM | ${connection?.name}`}>
@@ -28,8 +22,8 @@ const IndexPage: NextPage = () => {
           {(leads?.error || isError) && (
             <ErrorMessage error={leads?.error} message={leads?.message} />
           )}
-          {isLoading && <Spinner />}
-          {leads?.data && <Leads data={leads?.data} />}
+          {/* {isLoading && <Spinner />} */}
+          <Leads />
         </div>
       </SidebarLayout>
     </Layout>

@@ -2,8 +2,11 @@ import { Button, TextInput } from '@apideck/components'
 import { useEffect, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Lead } from 'types/Lead'
+import { LeadResponse } from 'types/LeadResponse'
+import { useLeads } from 'utils/useLeads'
 import { useModal } from 'utils/useModal'
 import { useToast } from 'utils/useToast'
+import { mutate } from 'swr'
 
 interface Props {
   defaultValues?: Lead
@@ -11,9 +14,11 @@ interface Props {
 
 const LeadForm = ({ defaultValues }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
+  const [isDeleting, setIsDeleting] = useState<boolean>(false)
+  const [error, setError] = useState<string | null | undefined>()
   const { removeModal } = useModal()
   const { addToast } = useToast()
+  const { createLead, updateLead, deleteLead, getLeadsUrl } = useLeads()
   const { register, control, errors, handleSubmit, setValue } = useForm({
     defaultValues
   })
@@ -21,7 +26,6 @@ const LeadForm = ({ defaultValues }: Props) => {
     control,
     name: 'emails'
   })
-
   const { fields: phoneNumbers, append: appendNumber, remove: removeNumber } = useFieldArray({
     control,
     name: 'phone_numbers'
@@ -39,7 +43,7 @@ const LeadForm = ({ defaultValues }: Props) => {
       const defaultPhoneValue = [
         {
           number: '',
-          type: 'default'
+          phone_type: 'default'
         }
       ]
       const emailsValue = defaultValues?.emails?.length ? defaultValues?.emails : defaultEmailsValue
@@ -53,32 +57,20 @@ const LeadForm = ({ defaultValues }: Props) => {
     initializeArrayFields()
   }, [defaultValues?.emails, defaultValues?.phone_numbers, setValue])
 
-  const createOrUpdateLead = async (values: Lead) => {
-    let response
-    if (leadID) {
-      response = await fetch(`/api/crm/leads/patch/`, {
-        method: 'PATCH',
-        body: JSON.stringify({ id: leadID, ...values })
-      })
-    } else {
-      response = await fetch('/api/crm/leads/post', {
-        method: 'POST',
-        body: JSON.stringify({ ...values, emails: [{ email: 'test@test.com' }] })
-      })
-    }
-
-    return response.json()
-  }
-
   const onSubmit = (values: Lead) => {
     setIsLoading(true)
     setError(null)
-    createOrUpdateLead(values)
-      .then((response: { data: Lead; error: string; message: string }) => {
-        const { error, message } = response
-        if (message || error) {
-          setError(message || error)
-        } else {
+
+    let responsePromise
+    if (leadID) {
+      responsePromise = updateLead(leadID, values)
+    } else {
+      responsePromise = createLead(values)
+    }
+    responsePromise
+      .then((response: LeadResponse) => {
+        if (response.status_code === 200 || response.status_code === 201) {
+          mutate(getLeadsUrl)
           removeModal()
           addToast({
             title: `Successfully ${leadID ? 'updated' : 'created'}!`,
@@ -86,12 +78,42 @@ const LeadForm = ({ defaultValues }: Props) => {
             type: 'success',
             autoClose: true
           })
+        } else {
+          const { error, message, detail } = response
+          setError(message || error)
+          console.log(detail)
         }
       })
       .catch((error) => {
         setError(error)
       })
       .finally(() => setIsLoading(false))
+  }
+
+  const handleDelete = async (id: string) => {
+    setIsDeleting(true)
+    setError(null)
+    deleteLead(id)
+      .then((response: LeadResponse) => {
+        if (response.status_code === 200) {
+          mutate(getLeadsUrl)
+          removeModal()
+          addToast({
+            title: `Successfully deleted!`,
+            description: `Lead with ID ${id} is successfully deleted`,
+            type: 'success',
+            autoClose: true
+          })
+        } else {
+          const { error, message, detail } = response
+          setError(message || error)
+          console.log(detail)
+        }
+      })
+      .catch((error) => {
+        setError(error?.message)
+      })
+      .finally(() => setIsDeleting(false))
   }
 
   return (
@@ -167,7 +189,7 @@ const LeadForm = ({ defaultValues }: Props) => {
               <div className="mt-2" key={`email-${index}`}>
                 <TextInput
                   name={`emails[${index}].email`}
-                  ref={register({ required: email.type === 'default' })}
+                  ref={register()}
                   placeholder={`Email ${email.type === 'default' ? '(default)' : '(other)'}`}
                 />
                 <input
@@ -176,6 +198,7 @@ const LeadForm = ({ defaultValues }: Props) => {
                   value={email.type || 'other'}
                   ref={register()}
                 />
+                <input type="hidden" name={`emails[${index}].id`} ref={register()} />
                 {errors.emails?.length && errors.emails[index] && (
                   <div className="mt-2 text-xs text-red-600">
                     {errors.emails?.length && errors.emails[index]?.email?.message}
@@ -220,7 +243,7 @@ const LeadForm = ({ defaultValues }: Props) => {
               <div className="mt-2" key={`phone-${index}`}>
                 <TextInput
                   name={`phone_numbers[${index}].number`}
-                  ref={register({ required: phone.phone_type === 'default' })}
+                  ref={register()}
                   placeholder={`Phone number ${
                     phone.phone_type === 'default' ? '(default)' : '(other)'
                   }`}
@@ -262,19 +285,33 @@ const LeadForm = ({ defaultValues }: Props) => {
             </Button>
           )}
 
-          <div className="flex flex-row-reverse p-4 mt-5 -m-5 sm:px-5 sm:mt-6 sm:-m-6 bg-gray-50">
-            <Button
-              text={leadID ? 'Update' : 'Create'}
-              type="submit"
-              isLoading={isLoading}
-              className="ml-3"
-            />
-            <Button
-              text="Cancel"
-              className="inline-flex"
-              variant="outline"
-              onClick={() => removeModal()}
-            />
+          <div className="p-4 mt-5 -m-5 sm:px-5 sm:mt-6 sm:-m-6 bg-gray-50">
+            <div className={leadID ? 'flex justify-between' : ''}>
+              {leadID && (
+                <Button
+                  text="Delete"
+                  type="button"
+                  variant="danger-outline"
+                  className="ml-1"
+                  isLoading={isDeleting}
+                  onClick={() => handleDelete(leadID)}
+                />
+              )}
+              <div className="flex flex-row-reverse">
+                <Button
+                  text={leadID ? 'Update' : 'Create'}
+                  type="submit"
+                  isLoading={isLoading}
+                  className="ml-3 mr-1"
+                />
+                <Button
+                  text="Cancel"
+                  className="inline-flex"
+                  variant="outline"
+                  onClick={() => removeModal()}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </form>

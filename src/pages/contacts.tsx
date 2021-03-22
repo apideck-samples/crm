@@ -8,7 +8,7 @@ const ContactsPage: NextPage = () => {
   const { connection } = useConnection()
 
   return (
-    <Layout title={`CRM | ${connection?.name || 'Apideck'}`}>
+    <Layout title={`Contacts | ${connection?.name || 'CRM'}`}>
       <Navbar />
       <PageHeader title="Contacts" />
       {/* TODO       */}

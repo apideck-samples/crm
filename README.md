@@ -1,48 +1,70 @@
-# Next Starter Kit
+# CRM
 
-<img alt="Logo" align="right" src="./public/img/logo.png" width="10%" />
+#### A sample project for viewing and managing leads with the [Apideck CRM API](https://developers.apideck.com/api-reference/crm).
 
-A boilerplate for creating new projects with Next.js, TypeScript, Tailwind CSS, ESLint, Prettier, Jest, and React Testing Library. Bootstrapped with [create-next-app](https://nextjs.org/docs/api-reference/create-next-app).
-<br>
-<br>
+The CRM API is a single API to push and query CRM data from +12 connectors. In this sample project, we use the REST API to create a customer relationship management tool that allows you to manage leads from multiple services (e.g. Salesforce, HubSpot, Copper etc.)
 
-## Quick overview
+Built with [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind](https://tailwindcss.com/).
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the starter kit:
+![](/public/img/screenshot.jpg)
 
-```bash
-npx create-next-app --example https://github.com/apideck-io/next-starter-kit
-# or
-yarn create next-app --example https://github.com/apideck-io/next-starter-kit
+## Run the sample locally
+
+### Requirements
+
+- **An Apideck account**: You can sign up for an Apideck account here: https://app.apideck.com/signup
+- **Apideck Application ID**: Available in your Apideck dashboard.
+- **Apideck API Key**: Available in your Apideck dashboard.
+
+### Installing the sample
+
+This project uses the CRM API. Visit https://developers.apideck.com/api-reference/crm for documentation of the API.
+
+#### Step 1: Update your environment variables
+
+- Copy `.env.example` and create a `.env.local` file
+- Add your API key: `NEXT_PUBLIC_UNIFY_API_KEY=<your-api-key>`
+- Add your Application ID: `NEXT_PUBLIC_APP_ID=<your-app-id>`
+- Your env should also include `NEXT_PUBLIC_UNIFY_API_URL=https://unify.apideck.com`
+- Your env should also include `NEXT_PUBLIC_CONSUMER_ID=test-consumer`
+- Optional: If you do not want to scope this application to your apideck account you can change the consumer ID. The consumer ID gives you the flexibility to build completely independent or multi-tenant apps.
+
+#### Step 2: Install dependencies
+
+- Install dependencies with `yarn` or `npm install`
+- Run the development server with `yarn dev` or `npm run dev`
+- Visit `http://localhost:3000/` to see if it's running. You probably see a message that you need to configure a connection.
+
+#### Step 2: Install dependencies
+
+- Install dependencies with `yarn` or `npm install`
+- Run the development server with `yarn dev` or `npm run dev`
+- Visit `http://localhost:3000/` to see if it's running. You probably see a message that you need to configure a connection.
+
+#### Step 3: Create a Vault session and add connections
+
+The first time you run the project you need to create a Vault session and add/configure at least one CRM connection. You can do this to click the `Integrations settings` button in the navbar. This will redirect you to the Integration Settings app that gives you a UI to configure CRM connections.
+
+After you have successfully configured a CRM connection you can use the `Return to application` link to return to `localhost:3000`. You can change the return URL inside the `VaultSessionButton`.
+
+You should now be able to load and manage the leads of the connection you have configured.
+
+## Project overview
+
 ```
-
-It will create a new directory inside the current folder.<br>
-Inside that directory, it will generate the initial project structure and install the transitive dependencies:
-
-```
- my-app
+ CRM
  ┣ __tests__
  ┃ ┣ components
- ┃ ┃ ┣ __snapshots__
- ┃ ┃ ┗ layout.test.tsx
  ┃ ┗ pages
- ┃ ┃ ┣ __snapshots__
- ┃ ┃ ┗ index.test.tsx
  ┣ public
  ┃ ┣ fonts
- ┃ ┃ ┣ basier-circle
  ┃ ┣ img
- ┃ ┃ ┣ logo.png
- ┃ ┃ ┗ screenshot.jpg
  ┣ src
  ┃ ┣ components
- ┃ ┃ ┗ Layout.tsx
  ┃ ┣ pages
- ┃ ┃ ┣ _app.tsx
- ┃ ┃ ┗ index.tsx
  ┃ ┗ styles
- ┃ ┃ ┗ tailwind.css
  ┣ .babelrc
+ ┣ .env.local
  ┣ .eslintrc.json
  ┣ .gitignore
  ┣ .prettierrc
@@ -56,10 +78,10 @@ Inside that directory, it will generate the initial project structure and instal
  ┗ yarn.lock
 ```
 
-Once the installation is done, you can open your project folder:
+After you have cloned the project and once the installation is done, you can open your project folder:
 
 ```sh
-cd next-starter-kit
+cd CRM
 ```
 
 Inside the newly created project, you can run some commands:
@@ -127,6 +149,9 @@ Before each push to the repository we run `jest` to check if all tests are passi
 
 To learn more, take a look at the following resources:
 
+- [CRM API](https://www.apideck.com/crm-api) - info about the CRM API of Apideck
+- [CRM API Documentation](https://developers.apideck.com/api-reference/crm) - documentation of the CRM API
+- [Vault API Documentation](https://developers.apideck.com/api-reference/vault) - documentation of the Vault API
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial
 - [TypeScript](https://www.typescriptlang.org/) - learn about TypeScript

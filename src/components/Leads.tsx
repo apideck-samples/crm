@@ -44,7 +44,7 @@ const Leads: FC = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="rounded-lg -overflow-x-auto">
+      <div className="overflow-x-auto">
         {isLoading && <LoadingTable />}
         {!isLoading && !leads?.error && (
           <div className="mb-4 sm:flex sm:justify-end">

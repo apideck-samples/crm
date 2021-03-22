@@ -4,26 +4,10 @@ import { useRef, useState } from 'react'
 import VaultSessionButton from './VaultSessionButton'
 
 export const Navbar = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [navbarOpen, setNavbarOpen] = useState(false)
-  const { pathname } = useRouter()
-  const dropdownNode = useRef()
+  const router = useRouter()
   const navbarNode = useRef()
   const hamburgerNode = useRef()
-
-  const handleClick = (e) => {
-    if (dropdownNode.current?.contains(e.target)) {
-      return
-    } else {
-      setDropdownOpen(false)
-    }
-
-    if (navbarNode.current?.contains(e.target) || hamburgerNode.current?.contains(e.target)) {
-      return
-    } else {
-      setNavbarOpen(false)
-    }
-  }
 
   return (
     <nav className="bg-white border-b border-cool-gray-200">
@@ -42,7 +26,7 @@ export const Navbar = () => {
                 <Link href="/">
                   <a
                     className={`px-3 py-2 mr-4 text-sm font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
-                      pathname === '/' && 'text-blue-700 bg-cool-gray-100'
+                      router?.pathname === '/' && 'text-blue-700 bg-cool-gray-100'
                     }`}
                   >
                     Leads
@@ -51,7 +35,7 @@ export const Navbar = () => {
                 <Link href="/companies">
                   <a
                     className={`px-3 py-2 mr-4 text-sm font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
-                      pathname === '/companies' && 'text-blue-700 bg-cool-gray-100'
+                      router?.pathname === '/companies' && 'text-blue-700 bg-cool-gray-100'
                     }`}
                   >
                     Companies
@@ -61,7 +45,7 @@ export const Navbar = () => {
                   <a
                     href=""
                     className={`px-3 py-2 mr-4 text-sm font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
-                      pathname === '/contacts' && 'text-blue-700 bg-cool-gray-100'
+                      router?.pathname === '/contacts' && 'text-blue-700 bg-cool-gray-100'
                     }`}
                   >
                     Contacts
@@ -71,7 +55,7 @@ export const Navbar = () => {
                   <a
                     href=""
                     className={`px-3 py-2 mr-4 text-sm font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
-                      pathname === '/opportunities' && 'text-blue-700 bg-cool-gray-100'
+                      router?.pathname === '/opportunities' && 'text-blue-700 bg-cool-gray-100'
                     }`}
                   >
                     Opportunities
@@ -119,7 +103,7 @@ export const Navbar = () => {
             <Link href="/">
               <a
                 className={`block px-3 py-2 text-base font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
-                  pathname === '/' && 'text-blue-700 bg-cool-gray-100'
+                  router?.pathname === '/' && 'text-blue-700 bg-cool-gray-100'
                 }`}
               >
                 Leads
@@ -129,7 +113,7 @@ export const Navbar = () => {
               <a
                 href=""
                 className={`block px-3 py-2 mt-1 text-base font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
-                  pathname === '/companies' && 'text-blue-700 bg-cool-gray-100'
+                  router?.pathname === '/companies' && 'text-blue-700 bg-cool-gray-100'
                 }`}
               >
                 Companies
@@ -139,7 +123,7 @@ export const Navbar = () => {
               <a
                 href=""
                 className={`block px-3 py-2 mt-1 text-base font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
-                  pathname === '/contacts' && 'text-blue-700 bg-cool-gray-100'
+                  router?.pathname === '/contacts' && 'text-blue-700 bg-cool-gray-100'
                 }`}
               >
                 Contacts
@@ -149,7 +133,7 @@ export const Navbar = () => {
               <a
                 href=""
                 className={`block px-3 py-2 mt-1 text-base font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
-                  pathname === '/opportunities' && 'text-blue-700 bg-cool-gray-100'
+                  router?.pathname === '/opportunities' && 'text-blue-700 bg-cool-gray-100'
                 }`}
               >
                 Opportunities

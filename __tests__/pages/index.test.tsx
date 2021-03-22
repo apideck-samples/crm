@@ -11,6 +11,6 @@ describe('App', () => {
   })
   it('shows the heading of the index page', () => {
     render(<App />)
-    expect(screen.getByRole('heading', { name: 'Next Starter Kit' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Leads' })).toBeInTheDocument()
   })
 })

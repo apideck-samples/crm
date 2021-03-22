@@ -1,3 +1,4 @@
+import fetch from 'node-fetch'
 import { headers } from '../../_utils'
 
 module.exports = async (req, res) => {

@@ -43,7 +43,6 @@ export const Navbar = () => {
                 </Link>
                 <Link href="/contacts">
                   <a
-                    href=""
                     className={`px-3 py-2 mr-4 text-sm font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
                       router?.pathname === '/contacts' && 'text-blue-700 bg-cool-gray-100'
                     }`}
@@ -53,7 +52,6 @@ export const Navbar = () => {
                 </Link>
                 <Link href="/opportunities">
                   <a
-                    href=""
                     className={`px-3 py-2 mr-4 text-sm font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
                       router?.pathname === '/opportunities' && 'text-blue-700 bg-cool-gray-100'
                     }`}
@@ -111,7 +109,6 @@ export const Navbar = () => {
             </Link>
             <Link href="/companies">
               <a
-                href=""
                 className={`block px-3 py-2 mt-1 text-base font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
                   router?.pathname === '/companies' && 'text-blue-700 bg-cool-gray-100'
                 }`}
@@ -121,7 +118,6 @@ export const Navbar = () => {
             </Link>
             <Link href="/contacts">
               <a
-                href=""
                 className={`block px-3 py-2 mt-1 text-base font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
                   router?.pathname === '/contacts' && 'text-blue-700 bg-cool-gray-100'
                 }`}
@@ -131,7 +127,6 @@ export const Navbar = () => {
             </Link>
             <Link href="/opportunities">
               <a
-                href=""
                 className={`block px-3 py-2 mt-1 text-base font-semibold text-gray-900 rounded-md hover:text-blue-700 hover:bg-cool-gray-100 focus:outline-none focus:text-white focus:bg-cool-gray-100 ${
                   router?.pathname === '/opportunities' && 'text-blue-700 bg-cool-gray-100'
                 }`}

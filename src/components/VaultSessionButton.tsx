@@ -15,7 +15,6 @@ const VaultSessionButton: FC = () => {
       method: 'POST',
       body: JSON.stringify({ redirect_uri: 'http://localhost:3000/' })
     })
-
     return response.json()
   }
 

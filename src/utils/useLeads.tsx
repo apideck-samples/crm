@@ -8,7 +8,7 @@ import useSWR from 'swr'
 export const useLeads = () => {
   const [cursor, setCursor] = useState(null)
   const { connection } = useConnection()
-  const serviceId = connection?.service_id
+  const serviceId = connection?.service_id || ''
   const prevServiceId = usePrevious(serviceId)
   const prevCursor = usePrevious(cursor)
 
@@ -19,7 +19,7 @@ export const useLeads = () => {
 
   const cursorParams =
     cursor && (!prevServiceId || prevServiceId === serviceId) ? `&cursor=${cursor}` : ''
-  const getLeadsUrl = `/api/crm/leads/get?serviceId=${serviceId || ''}${cursorParams}`
+  const getLeadsUrl = `/api/crm/leads/get?serviceId=${serviceId}${cursorParams}`
   const { data, error, revalidate } = useSWR(getLeadsUrl, fetcher)
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export const useLeads = () => {
   }, [serviceId, prevServiceId])
 
   const createLead = async (values: Lead) => {
-    const response = await fetch(`/api/crm/leads/post?serviceId=${serviceId || ''}`, {
+    const response = await fetch(`/api/crm/leads/post?serviceId=${serviceId}`, {
       method: 'POST',
       body: JSON.stringify(values)
     })
@@ -37,7 +37,7 @@ export const useLeads = () => {
   }
 
   const updateLead = async (id: string, values: Lead) => {
-    const response = await fetch(`/api/crm/leads/patch?serviceId=${serviceId || ''}`, {
+    const response = await fetch(`/api/crm/leads/patch?serviceId=${serviceId}`, {
       method: 'PATCH',
       body: JSON.stringify({ id, ...values })
     })
@@ -45,7 +45,7 @@ export const useLeads = () => {
   }
 
   const deleteLead = async (id: string) => {
-    const response = await fetch(`/api/crm/leads/delete?serviceId=${serviceId || ''}`, {
+    const response = await fetch(`/api/crm/leads/delete?serviceId=${serviceId}`, {
       method: 'DELETE',
       body: JSON.stringify({ id })
     })
@@ -62,12 +62,7 @@ export const useLeads = () => {
 
   const prevPage = () => {
     const prevCursor = data?.meta?.cursors?.previous
-
-    if (prevCursor) {
-      setCursor(prevCursor)
-    } else {
-      setCursor(null)
-    }
+    setCursor(prevCursor || null)
   }
 
   useEffect(() => {
@@ -79,12 +74,12 @@ export const useLeads = () => {
   return {
     leads: data,
     isLoading: !error && !data,
-    isError: error,
-    nextPage,
-    prevPage,
+    isError: data?.error || error,
     hasNextPage: data?.meta?.cursors?.next,
     currentPage: data?.meta?.cursors?.current,
     hasPrevPage: data?.meta?.cursors?.previous,
+    nextPage,
+    prevPage,
     createLead,
     updateLead,
     deleteLead,

@@ -58,14 +58,9 @@ const LeadForm = ({ defaultValues }: Props) => {
   const onSubmit = (values: Lead) => {
     setIsLoading(true)
     setError(null)
+    const response: Promise<LeadResponse> = leadID ? updateLead(leadID, values) : createLead(values)
 
-    let responsePromise
-    if (leadID) {
-      responsePromise = updateLead(leadID, values)
-    } else {
-      responsePromise = createLead(values)
-    }
-    responsePromise
+    response
       .then((response: LeadResponse) => {
         if (response.status_code === 200 || response.status_code === 201) {
           mutate(getLeadsUrl)
@@ -88,7 +83,7 @@ const LeadForm = ({ defaultValues }: Props) => {
       .finally(() => setIsLoading(false))
   }
 
-  const handleDelete = async (id: string) => {
+  const onDelete = async (id: string) => {
     setIsDeleting(true)
     setError(null)
     deleteLead(id)
@@ -292,7 +287,7 @@ const LeadForm = ({ defaultValues }: Props) => {
                   variant="danger-outline"
                   className="ml-1"
                   isLoading={isDeleting}
-                  onClick={() => handleDelete(leadID)}
+                  onClick={() => onDelete(leadID)}
                 />
               )}
               <div className="flex flex-row-reverse">

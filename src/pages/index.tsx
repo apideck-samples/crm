@@ -9,7 +9,7 @@ import { useLeads } from 'utils/useLeads'
 
 const IndexPage: NextPage = () => {
   const { connection } = useConnection()
-  const { leads, isError } = useLeads()
+  const { isError } = useLeads()
 
   return (
     <Layout title={`Leads | ${connection?.name || 'CRM'}`}>
@@ -17,9 +17,7 @@ const IndexPage: NextPage = () => {
       <PageHeader title="Leads" />
       <div className="pl-2 mx-auto mt-6 mb-12 overflow-hidden max-w-7xl sm:px-6 lg:px-8">
         <br />
-        {(leads?.error || isError) && (
-          <ErrorMessage error={leads?.error} message={leads?.message} />
-        )}
+        {isError && <ErrorMessage error={isError?.error || isError} message={isError?.message} />}
         <Leads />
       </div>
     </Layout>

@@ -87,7 +87,6 @@ const Table = ({ columns, data }: Props) => {
                     className="py-4 space-x-6 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
                     {...cell.getCellProps()}
                     key={`cell-${i}`}
-                    // style={{ maxWidth: 150 }}
                   >
                     {cell.render('Cell')}
                   </td>

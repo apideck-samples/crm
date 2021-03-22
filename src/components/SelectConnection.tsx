@@ -1,13 +1,14 @@
 import { Menu, Transition } from '@headlessui/react'
-import { useEffect } from 'react'
-import useSWR from 'swr'
+
 import { Connection } from 'types/Connection'
-import { useConnector } from 'utils/useConnector'
-import { useLeads } from 'utils/useLeads'
 import Spinner from './Spinner'
+import { useConnection } from 'utils'
+import { useEffect } from 'react'
+import { useLeads } from 'utils/useLeads'
+import useSWR from 'swr'
 
 const SelectConnection = () => {
-  const { setConnection, connection } = useConnector()
+  const { setConnection, connection } = useConnection()
   const { leads } = useLeads()
 
   const getConnections = async (url: string) => {

@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 
 import { Lead } from 'types/Lead'
-import { useConnector } from './useConnector'
+import { useConnection } from './useConnection'
 import { usePrevious } from './usePrevious'
 import useSWR from 'swr'
 
 export const useLeads = () => {
   const [cursor, setCursor] = useState(null)
-  const { connection } = useConnector()
+  const { connection } = useConnection()
   const serviceId = connection?.service_id
   const prevServiceId = usePrevious(serviceId)
+  const prevCursor = usePrevious(cursor)
 
   const fetcher = async (url: string) => {
     const response = await fetch(url)
@@ -70,8 +71,10 @@ export const useLeads = () => {
   }
 
   useEffect(() => {
-    revalidate()
-  }, [cursor, revalidate])
+    if (prevCursor && prevCursor !== cursor) {
+      revalidate()
+    }
+  }, [cursor, prevCursor, revalidate])
 
   return {
     leads: data,

@@ -1,29 +1,20 @@
 import ErrorMessage from 'components/ErrorMessage'
+import Layout from '../components/Layout'
 import Leads from 'components/Leads'
 import Navbar from 'components/Navbar'
-import PageHeader from 'components/PageHeader'
-import SelectConnection from 'components/SelectConnection'
 import { NextPage } from 'next'
-import { useConnector } from 'utils/useConnector'
+import PageHeader from 'components/PageHeader'
+import { useConnection } from 'utils'
 import { useLeads } from 'utils/useLeads'
-import Layout from '../components/Layout'
 
 const IndexPage: NextPage = () => {
-  const { connection } = useConnector()
+  const { connection } = useConnection()
   const { leads, isError } = useLeads()
 
   return (
     <Layout title={`CRM | ${connection?.name || 'Apideck'}`}>
       <Navbar />
-      <PageHeader title={'Leads'}>
-        <div className="flex flex-shrink-0 mt-4 md:mt-0 md:ml-4">
-          <span className="rounded-md shadow-sm">
-            <SelectConnection />
-          </span>
-        </div>
-      </PageHeader>
-
-      {/* <SidebarLayout> */}
+      <PageHeader title="Leads" />
       <div className="pl-2 mx-auto mt-6 mb-12 max-w-7xl sm:px-6 lg:px-8">
         <br />
         {(leads?.error || isError) && (
@@ -31,7 +22,6 @@ const IndexPage: NextPage = () => {
         )}
         <Leads />
       </div>
-      {/* </SidebarLayout> */}
     </Layout>
   )
 }

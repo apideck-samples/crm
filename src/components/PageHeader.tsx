@@ -1,6 +1,11 @@
 import React from 'react'
+import SelectConnection from './SelectConnection'
 
-export const Header = ({ title, children }) => {
+interface Props {
+  title: string
+}
+
+const PageHeader = ({ title }: Props) => {
   return (
     <header className="py-10 border-b border-cool-gray-200 bg-cool-gray-100">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -11,7 +16,11 @@ export const Header = ({ title, children }) => {
                 {title}
               </h2>
             </div>
-            {children}
+            <div className="flex flex-shrink-0 mt-4 md:mt-0 md:ml-4">
+              <span className="rounded-md shadow-sm">
+                <SelectConnection />
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -19,4 +28,4 @@ export const Header = ({ title, children }) => {
   )
 }
 
-export default Header
+export default PageHeader

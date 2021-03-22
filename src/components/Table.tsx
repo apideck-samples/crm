@@ -1,5 +1,5 @@
 import { Column, useSortBy, useTable } from 'react-table'
-import { useModal } from 'utils/useModal'
+import { useModal } from 'utils'
 import LeadForm from './LeadForm'
 
 interface Props {

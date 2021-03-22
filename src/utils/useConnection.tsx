@@ -17,6 +17,6 @@ export const ConnectorProvider = ({ children }: { children: ReactNode }) => {
   )
 }
 
-export const useConnector = () => {
+export const useConnection = () => {
   return useContext(ConnectorContext) as ContextProps
 }

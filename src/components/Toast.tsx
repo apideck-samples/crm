@@ -1,7 +1,8 @@
-import { Transition } from '@headlessui/react'
 import React, { useEffect, useState } from 'react'
+
 import { Toast } from 'types/Toast'
-import { useToast } from 'utils/useToast'
+import { Transition } from '@headlessui/react'
+import { useToast } from 'utils'
 
 interface Props {
   toast: Toast

@@ -1,12 +1,10 @@
 import { Button, TextInput } from '@apideck/components'
+import { mutate } from 'swr'
 import { useEffect, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { Lead } from 'types/Lead'
 import { LeadResponse } from 'types/LeadResponse'
-import { useLeads } from 'utils/useLeads'
-import { useModal } from 'utils/useModal'
-import { useToast } from 'utils/useToast'
-import { mutate } from 'swr'
+import { useLeads, useModal, useToast } from 'utils'
 
 interface Props {
   defaultValues?: Lead

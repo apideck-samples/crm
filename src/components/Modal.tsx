@@ -42,10 +42,11 @@ const Modal = React.forwardRef<HTMLDivElement, Props>(function Modal(props, ref)
             className={`w-full p-5 overflow-y-scroll bg-white shadow-lg rounded-t-lg sm:p-6 no-scrollbar sm:rounded-lg sm:m-4 sm:max-w-xl ${className}`}
             style={{ maxHeight: '90%', ...style }}
             ref={ref}
+            role="dialog"
+            onClick={(e) => e.stopPropagation()}
+            {...other}
           >
-            <div role="dialog" onClick={(e) => e.stopPropagation()} ref={ref} {...other}>
-              {children}
-            </div>
+            {children}
           </Transition.Child>
         </div>
       </Transition.Child>

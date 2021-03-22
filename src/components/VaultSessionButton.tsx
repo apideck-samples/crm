@@ -7,7 +7,7 @@ const VaultSessionButton: FC = () => {
   const redirectToVault = async () => {
     setIsLoading(true)
     const response = await createSession()
-    if (response.data.session_uri) window.location.href = response.data.session_uri
+    if (response.data?.session_uri) window.location.href = response.data.session_uri
     setIsLoading(false)
   }
   const createSession = async () => {

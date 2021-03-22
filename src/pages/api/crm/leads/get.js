@@ -5,7 +5,6 @@ module.exports = async (req, res) => {
     headers.append('X-APIDECK-SERVICE-ID', req.query?.serviceId)
   }
   const params = req.query?.cursor ? `?cursor=${req.query?.cursor}` : ''
-
   const raw = await fetch(`${process.env.NEXT_PUBLIC_UNIFY_BASE_URL}/crm/leads${params}`, {
     headers
   })

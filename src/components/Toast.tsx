@@ -10,7 +10,7 @@ interface Props {
 const ToastComponent: React.FC<Props> = ({ toast }) => {
   const { removeToast } = useToast()
   const [shouldShow, setShouldShow] = useState(false)
-  console.log(toast.id)
+
   useEffect(() => {
     if (!shouldShow) setShouldShow(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps

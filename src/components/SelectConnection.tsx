@@ -4,6 +4,7 @@ import useSWR from 'swr'
 import { Connection } from 'types/Connection'
 import { useConnector } from 'utils/useConnector'
 import { useLeads } from 'utils/useLeads'
+import Spinner from './Spinner'
 
 const SelectConnection = () => {
   const { setConnection, connection } = useConnector()
@@ -33,17 +34,21 @@ const SelectConnection = () => {
         {({ open }) => (
           <>
             <Menu.Button
-              className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-blue-200 rounded-md group hover:bg-cool-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-cool-gray-100 focus:ring-blue-600"
+              className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-blue-800 bg-blue-100 border border-blue-200 rounded-md group hover:bg-cool-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-cool-gray-100 focus:ring-blue-600"
               style={{ minWidth: 240 }}
             >
               <div>
-                <img
-                  className={`inline-block w-6 h-6 mr-2 rounded-full ${
-                    isLoading || !connection?.icon ? 'animate-spin opacity-20' : ''
-                  }`}
-                  src={!isLoading && connection?.icon ? connection?.icon : '/img/logo.png'}
-                  alt=""
-                />
+                {!isLoading && connection?.icon ? (
+                  <img
+                    className={`inline-block w-6 h-6 mr-2 rounded-full ${
+                      isLoading ? 'animate-spin opacity-20' : ''
+                    }`}
+                    src={!isLoading && connection?.icon ? connection?.icon : '/img/logo.png'}
+                    alt=""
+                  />
+                ) : (
+                  <Spinner className="w-6 h-6" />
+                )}
                 {!isLoading && <span>{connection?.name}</span>}
               </div>
               <svg className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -67,7 +72,7 @@ const SelectConnection = () => {
             >
               <Menu.Items
                 static
-                className="absolute right-0 w-full mt-2 origin-top-right bg-white border divide-y rounded-md outline-none border-cool-gray-200 divide-cool-gray-100"
+                className="absolute right-0 z-10 w-full mt-2 origin-top-right bg-white border divide-y rounded-md outline-none border-cool-gray-200 divide-cool-gray-100"
               >
                 <div className="py-1">
                   {connections?.data?.map((connection: Connection, i: number) => {

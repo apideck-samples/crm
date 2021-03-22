@@ -7,7 +7,7 @@ interface Props {
 
 const ErrorMessage = ({ error, message }: Props) => {
   return (
-    <div className="bg-white shadow sm:rounded-lg">
+    <div className="bg-white shadow-xl sm:rounded-lg">
       <div className="px-4 py-5 sm:p-6">
         <h3 className="text-lg font-medium leading-6 text-gray-900">{error}</h3>
         <div className="mt-2 sm:flex sm:items-start sm:justify-between">

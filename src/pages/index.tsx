@@ -12,10 +12,8 @@ const IndexPage: NextPage = () => {
   const { connection } = useConnector()
   const { leads, isError } = useLeads()
 
-  console.log(leads?.data)
-
   return (
-    <Layout title={`CRM | ${connection?.name}`}>
+    <Layout title={`CRM | ${connection?.name || 'Apideck'}`}>
       <Navbar />
       <PageHeader title={'Leads'}>
         <div className="flex flex-shrink-0 mt-4 md:mt-0 md:ml-4">
@@ -26,17 +24,13 @@ const IndexPage: NextPage = () => {
       </PageHeader>
 
       {/* <SidebarLayout> */}
-
       <div className="pl-2 mx-auto mt-6 mb-12 max-w-7xl sm:px-6 lg:px-8">
-        {/* <PageHeading title="Leads" showButton={!leads?.error && !isError} /> */}
         <br />
         {(leads?.error || isError) && (
           <ErrorMessage error={leads?.error} message={leads?.message} />
         )}
-        {/* {isLoading && <Spinner />} */}
         <Leads />
       </div>
-
       {/* </SidebarLayout> */}
     </Layout>
   )

@@ -120,11 +120,9 @@ const LeadForm = ({ defaultValues }: Props) => {
             <span>{error}</span>
           </div>
         )}
-
         <label htmlFor="company_name" className="block text-sm font-medium leading-5 text-gray-700">
           Company name
         </label>
-
         <TextInput
           className="mt-1"
           name="company_name"
@@ -136,28 +134,19 @@ const LeadForm = ({ defaultValues }: Props) => {
         {errors.company_name && (
           <div className="mt-2 text-xs text-red-600">{errors.company_name.message}</div>
         )}
-
-        <div className="mt-4">
-          <label htmlFor="name" className="block text-sm font-medium leading-5 text-gray-700">
-            Name
-          </label>
-
-          <TextInput
-            className="mt-1"
-            name="name"
-            required
-            ref={register({
-              required: 'Please enter a name'
-            })}
-          />
-          {errors.name && <div className="mt-2 text-xs text-red-600">{errors.name.message}</div>}
-        </div>
+        <TextInput name="name" ref={register()} hidden value={defaultValues?.name || ''} />
         <div className="mt-4">
           <label htmlFor="first_name" className="block text-sm font-medium leading-5 text-gray-700">
             First name
           </label>
-
-          <TextInput className="mt-1" name="first_name" ref={register()} />
+          <TextInput
+            className="mt-1"
+            name="first_name"
+            required
+            ref={register({
+              required: 'Please enter a first name'
+            })}
+          />
           {errors.first_name && (
             <div className="mt-2 text-xs text-red-600">{errors.first_name.message}</div>
           )}
@@ -166,13 +155,11 @@ const LeadForm = ({ defaultValues }: Props) => {
           <label htmlFor="last_name" className="block text-sm font-medium leading-5 text-gray-700">
             Last name
           </label>
-
           <TextInput className="mt-1" name="last_name" ref={register()} />
           {errors.last_name && (
             <div className="mt-2 text-xs text-red-600">{errors.last_name.message}</div>
           )}
         </div>
-
         <div className="mt-4">
           <label htmlFor="emails" className="block text-sm font-medium leading-5 text-gray-700">
             Emails

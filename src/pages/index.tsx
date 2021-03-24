@@ -1,27 +1,36 @@
-import { NextPage } from 'next'
 import Layout from '../components/Layout'
+import Leads from 'components/Leads'
+import Navbar from 'components/Navbar'
+import { NextPage } from 'next'
+import PageHeader from 'components/PageHeader'
+import { useConnection } from 'utils'
+import { useLeads } from 'utils/useLeads'
 
-const IndexPage: NextPage = () => (
-  <Layout title="Home | Next Starter Kit">
-    <div className="flex items-center justify-center min-h-screen p-4 text-center">
-      <div className="p-5 bg-white rounded-lg shadow-xl sm:max-w-md sm:w-full">
-        <img src="/img/logo.png" className="w-20 h-20 mx-auto -mt-10 rounded-full shadow-lg" />
-        <div className="mt-3 text-center sm:mt-5">
-          <h3 className="text-xl font-semibold leading-6 text-gray-800">Next Starter Kit</h3>
-          <div className="mt-2">
-            <p className="text-gray-500">
-              Welcome to the{' '}
-              <a className="font-semibold hover:text-indigo-500" href="https://www.apideck.com">
-                Apideck
-              </a>{' '}
-              boilerplate for building React applications with Next.js, TypeScript, and Tailwind
-              CSS.
-            </p>
+const IndexPage: NextPage = () => {
+  const { connection } = useConnection()
+  const { isError } = useLeads()
+
+  return (
+    <Layout title={`Leads | ${connection?.name || 'CRM'}`}>
+      <Navbar />
+      <PageHeader title="Leads" />
+      <div className="pl-2 mx-auto my-12 overflow-hidden max-w-7xl sm:px-6 lg:px-8">
+        {isError && (
+          <div>
+            <h3 className="text-lg font-medium leading-6 text-gray-900">
+              {isError?.error || isError}
+            </h3>
+            <div className="mt-2 sm:flex sm:items-start sm:justify-between">
+              <div className="max-w-xl text-sm text-gray-500">
+                <p>{isError?.message}</p>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+        <Leads />
       </div>
-    </div>
-  </Layout>
-)
+    </Layout>
+  )
+}
 
 export default IndexPage

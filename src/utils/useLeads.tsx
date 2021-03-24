@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { Lead } from 'types/Lead'
 import { useConnection } from './useConnection'
-import { usePrevious } from './usePrevious'
+import { usePrevious } from '@apideck/components'
 import useSWR from 'swr'
 
 export const useLeads = () => {

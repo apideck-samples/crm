@@ -1,12 +1,12 @@
-import { Button } from '@apideck/components'
-import Table from 'components/Table'
-import { columns } from 'constants/columns'
+import { Button, useModal, usePrevious, useToast } from '@apideck/components'
 import { FC, useEffect } from 'react'
+
 import { Lead } from 'types/Lead'
-import { useLeads, useModal, usePrevious } from 'utils'
-import { useToast } from 'utils'
 import LeadForm from './LeadForm'
 import LoadingTable from './LoadingTable'
+import Table from 'components/Table'
+import { columns } from 'constants/columns'
+import { useLeads } from 'utils'
 
 const Leads: FC = () => {
   const { leads, nextPage, prevPage, hasNextPage, hasPrevPage, currentPage, isLoading } = useLeads()

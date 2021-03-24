@@ -1,6 +1,6 @@
-import { Button } from '@apideck/components'
+import { Button, useModal } from '@apideck/components'
+
 import { FC } from 'react'
-import { useModal } from 'utils'
 import LeadForm from './LeadForm'
 
 interface Props {

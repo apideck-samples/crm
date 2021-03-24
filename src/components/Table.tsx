@@ -1,6 +1,7 @@
 import { Column, useSortBy, useTable } from 'react-table'
-import { useModal } from 'utils'
+
 import LeadForm from './LeadForm'
+import { useModal } from '@apideck/components'
 
 interface Props {
   columns: Column[]

@@ -6,12 +6,14 @@ import { useConnection } from 'utils'
 import { useEffect } from 'react'
 import { useLeads } from 'utils/useLeads'
 import useSWR from 'swr'
+import { validateEnv } from 'utils/validateEnv'
 
 const SelectConnection = () => {
   const { setConnection, connection } = useConnection()
   const { leads } = useLeads()
 
   const getConnections = async (url: string) => {
+    validateEnv()
     const response = await fetch(url)
     return await response.json()
   }

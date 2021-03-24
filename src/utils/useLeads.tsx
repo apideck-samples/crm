@@ -4,6 +4,7 @@ import { Lead } from 'types/Lead'
 import { useConnection } from './useConnection'
 import { usePrevious } from '@apideck/components'
 import useSWR from 'swr'
+import { validateEnv } from './validateEnv'
 
 export const useLeads = () => {
   const [cursor, setCursor] = useState(null)
@@ -13,6 +14,7 @@ export const useLeads = () => {
   const prevCursor = usePrevious(cursor)
 
   const fetcher = async (url: string) => {
+    validateEnv()
     const response = await fetch(url)
     return await response.json()
   }

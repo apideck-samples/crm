@@ -1,15 +1,15 @@
-import Layout from '../components/Layout'
-import Navbar from 'components/Navbar'
-import { NextPage } from 'next'
-import PageHeader from 'components/PageHeader'
-import { useConnection } from 'utils'
 import { Button } from '@apideck/components'
+import Navbar from 'components/Navbar'
+import PageHeader from 'components/PageHeader'
+import { NextPage } from 'next'
+import { useConnection } from 'utils'
+import Layout from '../components/Layout'
 
 const OpportunitiesPage: NextPage = () => {
   const { connection } = useConnection()
 
   return (
-    <Layout title={`Opportunities | ${connection?.name || 'CRM'}`}>
+    <Layout title={`Opportunities - ${connection?.name + ' | Apideck CRM'}`}>
       <Navbar />
       <PageHeader title="Opportunities" />
       <div className="pl-2 mx-auto my-12 overflow-hidden max-w-7xl sm:px-6 lg:px-8">

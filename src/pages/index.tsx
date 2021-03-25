@@ -1,17 +1,17 @@
-import Layout from '../components/Layout'
 import Leads from 'components/Leads'
 import Navbar from 'components/Navbar'
-import { NextPage } from 'next'
 import PageHeader from 'components/PageHeader'
+import { NextPage } from 'next'
 import { useConnection } from 'utils'
 import { useLeads } from 'utils/useLeads'
+import Layout from '../components/Layout'
 
 const IndexPage: NextPage = () => {
   const { connection } = useConnection()
   const { isError } = useLeads()
 
   return (
-    <Layout title={`Leads | ${connection?.name || 'CRM'}`}>
+    <Layout title={`Leads - ${connection?.name + ' | Apideck CRM'}`}>
       <Navbar />
       <PageHeader title="Leads" />
       <div className="pl-2 mx-auto my-12 overflow-hidden max-w-7xl sm:px-6 lg:px-8">

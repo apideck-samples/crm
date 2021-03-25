@@ -1,8 +1,8 @@
-# CRM
+# CRM - Integrate CRM data with Apideck
 
 #### A sample project for viewing and managing leads with the [Apideck CRM API](https://developers.apideck.com/api-reference/crm).
 
-The CRM API is a single API to push and query CRM data from +12 connectors. In this sample project, we use the REST API to create a customer relationship management tool that allows you to manage leads from multiple services (e.g. Salesforce, HubSpot, Copper etc.)
+The CRM API is a single API to push and query CRM data from +12 connectors. In this sample project, we use the REST API to create a customer relationship management tool that allows you to manage leads from multiple services (e.g., Salesforce, HubSpot, Copper, etc.)
 
 Built with [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind](https://tailwindcss.com/).
 
@@ -27,7 +27,7 @@ This project uses the CRM API. Visit https://developers.apideck.com/api-referenc
 - Add your Application ID: `NEXT_PUBLIC_APP_ID=<your-app-id>`
 - Your env should also include `NEXT_PUBLIC_UNIFY_API_URL=https://unify.apideck.com`
 - Your env should also include `NEXT_PUBLIC_CONSUMER_ID=test-consumer`
-- Optional: If you do not want to scope this application to your apideck account you can change the consumer ID. The consumer ID gives you the flexibility to build completely independent or multi-tenant apps.
+- Optional: If you do not want to scope this application to your Apideck account, you can change the consumer ID. The consumer ID gives you the flexibility to build completely independent or multi-tenant apps.
 
 #### Step 2: Install dependencies
 
@@ -43,9 +43,9 @@ This project uses the CRM API. Visit https://developers.apideck.com/api-referenc
 
 #### Step 3: Create a Vault session and add connections
 
-The first time you run the project you need to create a Vault session and add/configure at least one CRM connection. You can do this to click the `Integrations settings` button in the navbar. This will redirect you to the Integration Settings app that gives you a UI to configure CRM connections.
+The first time you run the project, you need to create a Vault session and add/configure at least one CRM connection. You can do this by clicking the `Integrations settings` button in the navbar. This will redirect you to the Integration Settings app that gives you a UI to configure CRM connections.
 
-After you have successfully configured a CRM connection you can use the `Return to application` link to return to `localhost:3000`. You can change the return URL inside the `VaultSessionButton`.
+After you have successfully configured a CRM connection, you can use the `Return to application` link to return to `localhost:3000`. You can change the return URL inside the `VaultSessionButton`.
 
 You should now be able to load and manage the leads of the connection you have configured.
 
@@ -88,18 +88,18 @@ Inside the newly created project, you can run some commands:
 
 #### `yarn dev`
 
-Runs `next dev` which starts the app in development mode.<br>
+Runs `next dev`, which starts the app in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 <img alt="Screenshot" src="./public/img/screenshot.jpg" />
 
 #### `yarn build`
 
-Runs `next build` which builds the application for production usage
+Runs `next build`, which builds the application for production usage
 
 #### `yarn start`
 
-Runs `next start` which starts a Next.js production server
+Runs `next start`, which starts a Next.js production server
 
 #### `yarn lint`
 
@@ -107,15 +107,15 @@ Runs the `eslint` command for all files with the `js`, `ts`, `jsx`, and `tsx` ex
 
 #### `yarn lint:fix`
 
-Runs the `eslint` command with the `--fix` flag which tries to automatically fix linting problems.
+Runs the `eslint` command with the `--fix` flag, which automatically tries to fix linting problems.
 
 #### `yarn lint:cache`
 
-Runs the `eslint` command with the `--cache` flag which only checks the changed files.
+Runs the `eslint` command with the `--cache` flag, which only checks the changed files.
 
 #### `yarn lint:format`
 
-Runs Prettier which formats all files inside the `src` directory based on the configuration set inside the `.prettierrc` file.
+Runs Prettier, which formats all files inside the `src` directory based on the configuration set inside the `.prettierrc` file.
 
 #### `yarn type-check`
 
@@ -123,15 +123,15 @@ Runs the `tsc` command to compile the project and check if it has type errors.
 
 #### `yarn test`
 
-Runs the `jest` command which runs all tests
+Runs the `jest` command, which runs all tests
 
 #### `yarn test:watch`
 
-Runs the `jest` command with `--watch` flag which runs all tests in watch mode
+Runs the `jest` command with `--watch` flag, which runs all tests in watch mode.
 
 #### `yarn test:coverage`
 
-Runs the `jest` command with `--coverage` flag which indicates that test coverage information should be collected and reported in the output.
+Runs the `jest` command with `--coverage` flag, which indicates that test coverage information should be collected and reported in the output.
 
 ## Commit hooks
 
@@ -139,11 +139,11 @@ This project uses [husky](https://github.com/typicode/husky) and [lint-staged](h
 
 #### Pre-commit
 
-Before each commit we run `eslint` and `prettier` on all staged files.
+Before each commit, we run `eslint` and `prettier` on all staged files.
 
 #### Pre-push
 
-Before each push to the repository we run `jest` to check if all tests are passing.
+Before each push to the repository, we run `jest` to check if all tests are passing.
 
 ## Resources
 

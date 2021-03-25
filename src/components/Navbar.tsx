@@ -16,8 +16,9 @@ export const Navbar = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link href="/">
-                <a>
-                  <img className="w-20 h-8" src="/img/logo-black.svg" alt="" />
+                <a className="flex">
+                  <img className="w-20 h-8" src="/img/logo-black.svg" alt="" />{' '}
+                  <span className="mt-1 ml-1">CRM</span>
                 </a>
               </Link>
             </div>

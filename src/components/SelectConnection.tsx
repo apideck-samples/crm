@@ -1,12 +1,11 @@
 import { Menu, Transition } from '@headlessui/react'
-
-import { Connection } from 'types/Connection'
-import Spinner from './Spinner'
-import { useConnection } from 'utils'
 import { useEffect } from 'react'
-import { useLeads } from 'utils/useLeads'
 import useSWR from 'swr'
+import { Connection } from 'types/Connection'
+import { useConnection } from 'utils'
+import { useLeads } from 'utils/useLeads'
 import { validateEnv } from 'utils/validateEnv'
+import Spinner from './Spinner'
 
 const SelectConnection = () => {
   const { setConnection, connection } = useConnection()
@@ -19,6 +18,7 @@ const SelectConnection = () => {
   }
 
   const { data: connections, error } = useSWR(`/api/vault/connections`, getConnections)
+
   const isLoading = !connections && !error
 
   useEffect(() => {
@@ -109,46 +109,6 @@ const SelectConnection = () => {
           </>
         )}
       </Menu>
-    </div>
-  )
-
-  return (
-    <div className="relative inline-block px-3 my-6 text-left">
-      <div>
-        <button
-          type="button"
-          className="w-full px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md group hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-purple-500"
-          id="options-menu"
-          aria-expanded="false"
-          aria-haspopup="true"
-        >
-          <span className="flex items-center justify-between w-full">
-            <span className="flex items-center justify-between min-w-0 space-x-3">
-              <img
-                className="flex-shrink-0 w-10 h-10 rounded-full"
-                src="https://res.cloudinary.com/apideck/image/upload/v1529456047/catalog/salesforce/icon128x128.png"
-                alt=""
-              />
-              <span className="flex-1 min-w-0">
-                <span className="text-sm font-medium text-gray-900 truncate">SalesForce</span>
-              </span>
-            </span>
-            <svg
-              className="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </span>
-        </button>
-      </div>
     </div>
   )
 }

@@ -1,11 +1,13 @@
 import { Menu, Transition } from '@headlessui/react'
-import { useEffect } from 'react'
-import useSWR from 'swr'
+import { createVaultSession, useConnection } from 'utils'
+
 import { Connection } from 'types/Connection'
-import { useConnection } from 'utils'
-import { useLeads } from 'utils/useLeads'
-import { validateEnv } from 'utils/validateEnv'
 import Spinner from './Spinner'
+import { isConnected } from 'utils'
+import { useEffect } from 'react'
+import { useLeads } from 'utils/useLeads'
+import useSWR from 'swr'
+import { validateEnv } from 'utils/validateEnv'
 
 const SelectConnection = () => {
   const { setConnection, connection } = useConnection()
@@ -18,18 +20,37 @@ const SelectConnection = () => {
   }
 
   const { data: connections, error } = useSWR(`/api/vault/connections`, getConnections)
-
   const isLoading = !connections && !error
+  const addedConnections = connections?.data?.filter((connection: Connection) => connection.added)
 
   useEffect(() => {
-    if (leads?.service && connections?.data?.length && !connection) {
-      const connector = connections.data.find(
+    if (leads?.service && addedConnections.length && !connection) {
+      const connector = addedConnections.find(
         (connection: Connection) => connection.service_id === leads?.service
       )
       setConnection(connector)
+    } else if (!connection && addedConnections?.length) {
+      setConnection(addedConnections[0])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [leads?.service, setConnection])
+  }, [leads?.service, setConnection, addedConnections])
+
+  const selectConnection = async (connection: Connection) => {
+    if (!isConnected(connection)) {
+      const response = await createVaultSession()
+      const sessionUrl = response?.data?.session_uri
+      if (!sessionUrl) return
+      const redirectUrl = `https://vault.apideck.com/integrations/crm/${connection?.service_id}/enable`
+      const token = sessionUrl.substring(sessionUrl.lastIndexOf('/') + 1)
+      window.location.href = `${redirectUrl}?jwt=${token}`
+    }
+    setConnection(connection)
+  }
+
+  const redirectToVault = async () => {
+    const response = await createVaultSession()
+    window.location.href = response.data?.session_uri
+  }
 
   return (
     <div className="relative inline-block">
@@ -41,7 +62,7 @@ const SelectConnection = () => {
               style={{ minWidth: 240 }}
             >
               <div>
-                {!isLoading && connection?.icon ? (
+                {!isLoading && connection?.icon && (
                   <img
                     className={`inline-block w-6 h-6 mr-2 rounded-full ${
                       isLoading ? 'animate-spin opacity-20' : ''
@@ -49,10 +70,10 @@ const SelectConnection = () => {
                     src={!isLoading && connection?.icon ? connection?.icon : '/img/logo.png'}
                     alt=""
                   />
-                ) : (
-                  <Spinner className="w-6 h-6" />
                 )}
-                {!isLoading && <span>{connection?.name}</span>}
+                {isLoading && <Spinner className="w-6 h-6" />}
+
+                {!isLoading && <span>{connection?.name || 'No integrations'}</span>}
               </div>
               <svg className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -78,15 +99,17 @@ const SelectConnection = () => {
                 className="absolute right-0 z-10 w-full mt-2 origin-top-right bg-white border divide-y rounded-md outline-none border-cool-gray-200 divide-cool-gray-100"
               >
                 <div className="py-1">
-                  {connections?.data?.map((connection: Connection, i: number) => {
+                  {addedConnections?.map((connection: Connection, i: number) => {
                     return (
                       <Menu.Item key={i}>
                         {({ active }) => (
                           <div
-                            onClick={() => setConnection(connection)}
+                            onClick={() => selectConnection(connection)}
                             className={`${
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                            } flex items-center justify-between min-w-0 mx-2 cursor-pointer rounded-md py-1 overflow-hidden`}
+                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-600'
+                            } flex items-center justify-between min-w-0 mx-2 cursor-pointer rounded-md py-0.5 overflow-hidden ${
+                              connection.enabled ? '' : 'opacity-60'
+                            }`}
                           >
                             <img
                               className="flex-shrink-0 w-6 h-6 m-2 rounded-full"
@@ -98,11 +121,47 @@ const SelectConnection = () => {
                                 {connection.name}
                               </span>
                             </span>
+
+                            <span
+                              className={`inline-block w-2.5 h-2.5 mr-2 rounded-full ring-2 ring-white ${
+                                connection.enabled ? 'bg-primary-500' : 'bg-gray-300'
+                              }`}
+                            ></span>
                           </div>
                         )}
                       </Menu.Item>
                     )
                   })}
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        onClick={() => redirectToVault()}
+                        className={`${
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-600'
+                        } flex items-center justify-between min-w-0 mx-2 cursor-pointer rounded-md py-0.5 overflow-hidden`}
+                      >
+                        <svg
+                          className="flex-shrink-0 w-6 h-6 m-2"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                          />
+                        </svg>
+                        <span className="flex-1 min-w-0">
+                          <span className="text-sm font-medium text-gray-900 truncate">
+                            Add integration
+                          </span>
+                        </span>
+                      </div>
+                    )}
+                  </Menu.Item>
                 </div>
               </Menu.Items>
             </Transition>

@@ -1,31 +1,36 @@
-import { Button } from '@apideck/components'
 import { FC, useState } from 'react'
 
-const VaultSessionButton: FC = () => {
+import { Button } from '@apideck/components'
+import { createVaultSession } from 'utils'
+
+interface Props {
+  text: string
+  variant: 'outline' | 'primary' | 'secondary' | 'danger' | 'danger-outline'
+  redirectUrl?: string
+}
+
+const VaultSessionButton: FC<Props> = ({
+  text = 'Integration settings',
+  variant = 'outline',
+  redirectUrl
+}) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const redirectToVault = async () => {
     setIsLoading(true)
-    const response = await createSession()
-    if (response.data?.session_uri) window.location.href = response.data.session_uri
-    setIsLoading(false)
-  }
-  const createSession = async () => {
-    const response = await fetch('/api/vault/sessions', {
-      method: 'POST',
-      body: JSON.stringify({ redirect_uri: 'http://localhost:3000/' })
-    })
-    return response.json()
+    const response = await createVaultSession()
+    const url = response.data?.session_uri
+    if (!url) return
+    if (redirectUrl) {
+      const token = url.substring(url.lastIndexOf('/') + 1)
+      window.location.href = `${redirectUrl}?jwt=${token}`
+    } else {
+      window.location.href = url
+    }
   }
 
   return (
-    <Button
-      text="Integration settings"
-      variant="outline"
-      className="w-full"
-      isLoading={isLoading}
-      onClick={() => redirectToVault()}
-    />
+    <Button text={text} variant={variant} isLoading={isLoading} onClick={() => redirectToVault()} />
   )
 }
 

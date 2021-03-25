@@ -1,7 +1,8 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
+
+import Link from 'next/link'
 import VaultSessionButton from './VaultSessionButton'
+import { useRouter } from 'next/router'
 
 export const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false)
@@ -18,7 +19,9 @@ export const Navbar = () => {
               <Link href="/">
                 <a className="flex">
                   <img className="w-20 h-8" src="/img/logo-black.svg" alt="" />{' '}
-                  <span className="mt-1 ml-1">CRM</span>
+                  <span className="mt-0.5 ml-0.5 font-bold text-lg text-primary-700 text-size-lg">
+                    CRM
+                  </span>
                 </a>
               </Link>
             </div>

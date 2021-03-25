@@ -46,6 +46,12 @@ const SelectConnection = () => {
     }
     setConnection(connection)
   }
+
+  const redirectToVault = async () => {
+    const response = await createVaultSession()
+    window.location.href = response.data?.session_uri
+  }
+
   return (
     <div className="relative inline-block">
       <Menu>
@@ -67,7 +73,7 @@ const SelectConnection = () => {
                 )}
                 {isLoading && <Spinner className="w-6 h-6" />}
 
-                {!isLoading && <span>{connection?.name}</span>}
+                {!isLoading && <span>{connection?.name || 'No integrations'}</span>}
               </div>
               <svg className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -100,8 +106,8 @@ const SelectConnection = () => {
                           <div
                             onClick={() => selectConnection(connection)}
                             className={`${
-                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
-                            } flex items-center justify-between min-w-0 mx-2 cursor-pointer rounded-md py-1 overflow-hidden ${
+                              active ? 'bg-gray-100 text-gray-900' : 'text-gray-600'
+                            } flex items-center justify-between min-w-0 mx-2 cursor-pointer rounded-md py-0.5 overflow-hidden ${
                               connection.enabled ? '' : 'opacity-60'
                             }`}
                           >
@@ -126,6 +132,36 @@ const SelectConnection = () => {
                       </Menu.Item>
                     )
                   })}
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        onClick={() => redirectToVault()}
+                        className={`${
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-600'
+                        } flex items-center justify-between min-w-0 mx-2 cursor-pointer rounded-md py-0.5 overflow-hidden`}
+                      >
+                        <svg
+                          className="flex-shrink-0 w-6 h-6 m-2"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                          />
+                        </svg>
+                        <span className="flex-1 min-w-0">
+                          <span className="text-sm font-medium text-gray-900 truncate">
+                            Add integration
+                          </span>
+                        </span>
+                      </div>
+                    )}
+                  </Menu.Item>
                 </div>
               </Menu.Items>
             </Transition>

@@ -1,6 +1,5 @@
-import React, { ReactNode } from 'react'
-
 import Head from 'next/head'
+import React, { ReactNode } from 'react'
 
 type Props = {
   children: ReactNode
@@ -11,8 +10,8 @@ type Props = {
 
 const Layout = ({
   children,
-  title = 'Apideck - Next Starter Kit',
-  description = 'A Next.js starter kit with TypeScript, Tailwind, Jest, Prettier, and Eslint',
+  title = 'Apideck CRM',
+  description = 'An Apideck sample project that demonstrates how to embed CRM data into your product. Use Apideck and integrate APIs faster.',
   favicon = '/img/logo.png'
 }: Props) => (
   <div>

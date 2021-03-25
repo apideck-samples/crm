@@ -3,7 +3,7 @@ import { createVaultSession, useConnection } from 'utils'
 
 import { Connection } from 'types/Connection'
 import Spinner from './Spinner'
-import { isConnected } from 'utils/isConnected'
+import { isConnected } from 'utils'
 import { useEffect } from 'react'
 import { useLeads } from 'utils/useLeads'
 import useSWR from 'swr'

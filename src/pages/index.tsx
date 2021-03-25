@@ -21,12 +21,12 @@ const IndexPage: NextPage = () => {
       <div className="pl-2 mx-auto my-12 overflow-hidden max-w-7xl sm:px-6 lg:px-8">
         {isError && (
           <div>
-            <h3 className="text-lg font-medium leading-6 text-gray-900">{isError}</h3>
+            <h3 className="text-lg font-medium leading-6 text-gray-900">{leads?.error}</h3>
             <div className="mt-2 sm:flex sm:items-start sm:justify-between">
               <div className="max-w-xl text-sm text-gray-500">
                 <p>{leads?.detail}</p>
               </div>
-              {leads?.status_code === 401 && connection?.service_id && (
+              {leads?.statusCode === 401 && connection?.service_id && (
                 <VaultSessionButton
                   text={`Authorize ${connection?.name}`}
                   variant="primary"

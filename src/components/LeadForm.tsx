@@ -2,7 +2,7 @@ import { Button, TextInput, useModal, useToast } from '@apideck/components'
 import { useEffect, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
-import { Lead } from 'types/Lead'
+import { Lead } from '@apideck/node'
 import { LeadResponse } from 'types/LeadResponse'
 import { mutate } from 'swr'
 import { useLeads } from 'utils'
@@ -27,7 +27,7 @@ const LeadForm = ({ defaultValues }: Props) => {
   })
   const { fields: phoneNumbers, append: appendNumber, remove: removeNumber } = useFieldArray({
     control,
-    name: 'phone_numbers'
+    name: 'phoneNumbers'
   })
   const leadID = defaultValues?.id
 
@@ -42,19 +42,19 @@ const LeadForm = ({ defaultValues }: Props) => {
       const defaultPhoneValue = [
         {
           number: '',
-          phone_type: 'default'
+          type: 'default'
         }
       ]
       const emailsValue = defaultValues?.emails?.length ? defaultValues?.emails : defaultEmailsValue
-      const defaultPhoneNumbers = defaultValues?.phone_numbers?.length
-        ? defaultValues?.phone_numbers
+      const defaultPhoneNumbers = defaultValues?.phoneNumbers?.length
+        ? defaultValues?.phoneNumbers
         : defaultPhoneValue
       setValue('emails', emailsValue)
-      setValue('phone_numbers', defaultPhoneNumbers)
+      setValue('phoneNumbers', defaultPhoneNumbers)
     }
 
     initializeArrayFields()
-  }, [defaultValues?.emails, defaultValues?.phone_numbers, setValue])
+  }, [defaultValues?.emails, defaultValues?.phoneNumbers, setValue])
 
   const onSubmit = (values: Lead) => {
     setIsLoading(true)
@@ -63,12 +63,12 @@ const LeadForm = ({ defaultValues }: Props) => {
 
     response
       .then((response: LeadResponse) => {
-        if (response.status_code === 200 || response.status_code === 201) {
+        if (response.statusCode === 200 || response.statusCode === 201) {
           mutate(getLeadsUrl)
           removeModal()
           addToast({
             title: `Successfully ${leadID ? 'updated' : 'created'}!`,
-            description: `${values.name} is successfully ${leadID ? 'updated' : 'added'}`,
+            description: `${values.firstName} is successfully ${leadID ? 'updated' : 'added'}`,
             type: 'success',
             autoClose: true
           })
@@ -89,7 +89,7 @@ const LeadForm = ({ defaultValues }: Props) => {
     setError(null)
     deleteLead(id)
       .then((response: LeadResponse) => {
-        if (response.status_code === 200) {
+        if (response.statusCode === 200) {
           mutate(getLeadsUrl)
           removeModal()
           addToast({
@@ -121,44 +121,44 @@ const LeadForm = ({ defaultValues }: Props) => {
             <span>{error}</span>
           </div>
         )}
-        <label htmlFor="company_name" className="block text-sm font-medium leading-5 text-gray-700">
+        <label htmlFor="companyName" className="block text-sm font-medium leading-5 text-gray-700">
           Company name
         </label>
         <TextInput
           className="mt-1"
-          name="company_name"
+          name="companyName"
           required
           ref={register({
             required: 'Please enter an company name'
           })}
         />
-        {errors.company_name && (
-          <div className="mt-2 text-xs text-red-600">{errors.company_name.message}</div>
+        {errors.companyName && (
+          <div className="mt-2 text-xs text-red-600">{errors.companyName.message}</div>
         )}
         <TextInput name="name" ref={register()} hidden value={defaultValues?.name || ''} />
         <div className="mt-4">
-          <label htmlFor="first_name" className="block text-sm font-medium leading-5 text-gray-700">
+          <label htmlFor="firstName" className="block text-sm font-medium leading-5 text-gray-700">
             First name
           </label>
           <TextInput
             className="mt-1"
-            name="first_name"
+            name="firstName"
             required
             ref={register({
               required: 'Please enter a first name'
             })}
           />
-          {errors.first_name && (
-            <div className="mt-2 text-xs text-red-600">{errors.first_name.message}</div>
+          {errors.firstName && (
+            <div className="mt-2 text-xs text-red-600">{errors.firstName.message}</div>
           )}
         </div>
         <div className="mt-4">
-          <label htmlFor="last_name" className="block text-sm font-medium leading-5 text-gray-700">
+          <label htmlFor="lastName" className="block text-sm font-medium leading-5 text-gray-700">
             Last name
           </label>
-          <TextInput className="mt-1" name="last_name" ref={register()} />
-          {errors.last_name && (
-            <div className="mt-2 text-xs text-red-600">{errors.last_name.message}</div>
+          <TextInput className="mt-1" name="lastName" ref={register()} />
+          {errors.lastName && (
+            <div className="mt-2 text-xs text-red-600">{errors.lastName.message}</div>
           )}
         </div>
         <div className="mt-4">
@@ -221,7 +221,7 @@ const LeadForm = ({ defaultValues }: Props) => {
 
         <div className="mt-4">
           <label
-            htmlFor="phone_numbers"
+            htmlFor="phoneNumbers"
             className="block text-sm font-medium leading-5 text-gray-700"
           >
             Phone numbers
@@ -230,7 +230,7 @@ const LeadForm = ({ defaultValues }: Props) => {
             return (
               <div className="mt-2" key={`phone-${index}`}>
                 <TextInput
-                  name={`phone_numbers[${index}].number`}
+                  name={`phoneNumbers[${index}].number`}
                   ref={register()}
                   placeholder={`Phone number ${
                     phone.phone_type === 'default' ? '(default)' : '(other)'
@@ -238,21 +238,21 @@ const LeadForm = ({ defaultValues }: Props) => {
                 />
                 <input
                   type="hidden"
-                  name={`phone_numbers[${index}].phone_type`}
+                  name={`phoneNumbers[${index}].phone_type`}
                   value={phone.phone_type || 'other'}
                   ref={register()}
                 />
                 {phone.id && (
                   <input
                     type="hidden"
-                    name={`phone_numbers[${index}].id`}
+                    name={`phoneNumbers[${index}].id`}
                     ref={register()}
                     value={phone.id}
                   />
                 )}
-                {errors.phone_numbers?.length && errors.phone_numbers[index] && (
+                {errors.phoneNumbers?.length && errors.phoneNumbers[index] && (
                   <div className="mt-2 text-xs text-red-600">
-                    {errors.phone_numbers?.length && errors.phone_numbers[index]?.number?.message}
+                    {errors.phoneNumbers?.length && errors.phoneNumbers[index]?.number?.message}
                   </div>
                 )}
               </div>

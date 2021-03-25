@@ -1,7 +1,7 @@
-import { Lead } from './Lead'
+import { Lead } from '@apideck/node'
 
 export interface SuccessResponse {
-  status_code: number
+  statusCode: number
   status: string
   service: string
   resource: string

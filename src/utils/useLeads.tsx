@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Lead } from 'types/Lead'
+import { Lead } from '@apideck/node'
 import { useConnection } from './useConnection'
 import { usePrevious } from '@apideck/components'
 import useSWR from 'swr'
@@ -21,7 +21,7 @@ export const useLeads = () => {
 
   const cursorParams =
     cursor && (!prevServiceId || prevServiceId === serviceId) ? `&cursor=${cursor}` : ''
-  const getLeadsUrl = `/api/crm/leads/get?serviceId=${serviceId}${cursorParams}`
+  const getLeadsUrl = serviceId ? `/api/crm/leads/get?serviceId=${serviceId}${cursorParams}` : null
   const { data, error, revalidate } = useSWR(getLeadsUrl, fetcher)
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const useLeads = () => {
   const updateLead = async (id: string, values: Lead) => {
     const response = await fetch(`/api/crm/leads/patch?serviceId=${serviceId}`, {
       method: 'PATCH',
-      body: JSON.stringify({ id, ...values })
+      body: JSON.stringify({ id, lead: values })
     })
     return response.json()
   }

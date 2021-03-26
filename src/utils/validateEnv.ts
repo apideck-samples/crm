@@ -12,7 +12,4 @@ export const validateEnv = () => {
   if (!process.env.NEXT_PUBLIC_UNIFY_CONSUMER_ID) {
     throw message('Consumer ID')
   }
-  if (!process.env.NEXT_PUBLIC_UNIFY_BASE_URL) {
-    throw message('Base URL')
-  }
 }

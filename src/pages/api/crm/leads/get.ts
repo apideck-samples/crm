@@ -6,7 +6,8 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
   const result = await apideck.crm.leads
     .list({
       limit: 20,
-      serviceId: req.query?.serviceId as string
+      serviceId: req.query?.serviceId as string,
+      cursor: req.query?.cursor as string
     })
     .catch(async (error: Response) => await error.json())
 

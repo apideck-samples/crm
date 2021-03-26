@@ -64,7 +64,7 @@ export const useLeads = () => {
 
   const prevPage = () => {
     const prevCursor = data?.meta?.cursors?.previous
-    setCursor(prevCursor || null)
+    setCursor(prevCursor)
   }
 
   useEffect(() => {

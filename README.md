@@ -2,7 +2,7 @@
 
 #### A sample project for viewing and managing leads with the [Apideck CRM API](https://developers.apideck.com/api-reference/crm).
 
-The CRM API is a single API to push and query CRM data from +12 connectors. In this sample project, we use the REST API to create a customer relationship management tool that allows you to manage leads from multiple services (e.g., Salesforce, HubSpot, Copper, etc.)
+The CRM API is a single API to push and query CRM data from +12 connectors. In this sample project, we use the [Apideck Node SDK](https://www.npmjs.com/package/@apideck/node) to create a customer relationship management tool that allows you to manage leads from multiple services (e.g., Salesforce, HubSpot, Copper, etc.)
 
 Built with [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind](https://tailwindcss.com/).
 
@@ -18,14 +18,13 @@ Built with [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptla
 
 ### Installing the sample
 
-This project uses the CRM API. Visit https://developers.apideck.com/api-reference/crm for documentation of the API.
+This project uses the CRM API with the Node SDK. Visit https://developers.apideck.com/api-reference/crm for documentation of the API and https://github.com/apideck-libraries/apideck-node for documentation about the SDK.
 
 #### Step 1: Update your environment variables
 
 - Copy `.env.example` and create a `.env.local` file
 - Add your API key: `NEXT_PUBLIC_UNIFY_API_KEY=<your-api-key>`
 - Add your Application ID: `NEXT_PUBLIC_APP_ID=<your-app-id>`
-- Your env should also include `NEXT_PUBLIC_UNIFY_API_URL=https://unify.apideck.com`
 - Your env should also include `NEXT_PUBLIC_CONSUMER_ID=test-consumer`
 - Optional: If you do not want to scope this application to your Apideck account, you can change the consumer ID. The consumer ID gives you the flexibility to build completely independent or multi-tenant apps.
 
@@ -33,17 +32,11 @@ This project uses the CRM API. Visit https://developers.apideck.com/api-referenc
 
 - Install dependencies with `yarn` or `npm install`
 - Run the development server with `yarn dev` or `npm run dev`
-- Visit `http://localhost:3000/` to see if it's running. You probably see a message that you need to configure a connection.
-
-#### Step 2: Install dependencies
-
-- Install dependencies with `yarn` or `npm install`
-- Run the development server with `yarn dev` or `npm run dev`
-- Visit `http://localhost:3000/` to see if it's running. You probably see a message that you need to configure a connection.
+- Visit `http://localhost:3000/` to see if it's running. If you haven't configured any integrations yet you will see a message.
 
 #### Step 3: Create a Vault session and add connections
 
-The first time you run the project, you need to create a Vault session and add/configure at least one CRM connection. You can do this by clicking the `Integrations settings` button in the navbar. This will redirect you to the Integration Settings app that gives you a UI to configure CRM connections.
+You need to create a Vault session and add/configure at least one CRM connection. You can do this by clicking the `Integrations settings` button in the navbar. This will redirect you to the [Integration Settings](https://github.com/apideck-samples/integration-settings) app that gives you a UI to configure CRM connections.
 
 After you have successfully configured a CRM connection, you can use the `Return to application` link to return to `localhost:3000`. You can change the return URL inside the `VaultSessionButton`.
 
@@ -52,7 +45,7 @@ You should now be able to load and manage the leads of the connection you have c
 ## Project overview
 
 ```
- CRM
+ crm
  ┣ __tests__
  ┃ ┣ components
  ┃ ┗ pages
@@ -62,7 +55,9 @@ You should now be able to load and manage the leads of the connection you have c
  ┣ src
  ┃ ┣ components
  ┃ ┣ pages
- ┃ ┗ styles
+ ┃ ┣ styles
+ ┃ ┣ types
+ ┃ ┗ utils
  ┣ .babelrc
  ┣ .env.local
  ┣ .eslintrc.json
@@ -81,7 +76,7 @@ You should now be able to load and manage the leads of the connection you have c
 After you have cloned the project and once the installation is done, you can open your project folder:
 
 ```sh
-cd CRM
+cd crm
 ```
 
 Inside the newly created project, you can run some commands:
@@ -151,6 +146,7 @@ To learn more, take a look at the following resources:
 - [CRM API Documentation](https://developers.apideck.com/api-reference/crm) - documentation of the CRM API
 - [Vault API Documentation](https://developers.apideck.com/api-reference/vault) - documentation of the Vault API
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API
+- [Vercel Serverless Functions](https://vercel.com/docs/serverless-functions/introduction) - learn more about serverless functions by using the `/pages/api` directory in Next.js projects
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial
 - [TypeScript](https://www.typescriptlang.org/) - learn about TypeScript
 - [Tailwind CSS](https://tailwindcss.com/) - learn about the utility-first CSS framework Tailwind

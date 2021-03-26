@@ -12,7 +12,7 @@ const formFieldsConfigured = (connection: Connection): boolean => {
   return requiredFields.every(({ value }) => value !== '')
 }
 
-export const isConnected = (connection: Connection): boolean => {
+export const isAuthorized = (connection: Connection): boolean => {
   const { auth_type, configured } = connection
 
   if (!configured) return false

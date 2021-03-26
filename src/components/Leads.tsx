@@ -1,7 +1,7 @@
 import { Button, useModal, usePrevious, useToast } from '@apideck/components'
 import { FC, useEffect } from 'react'
 
-import { Lead } from 'types/Lead'
+import { Lead } from '@apideck/node'
 import LeadForm from './LeadForm'
 import LoadingTable from './LoadingTable'
 import Table from 'components/Table'
@@ -10,7 +10,7 @@ import { useLeads } from 'utils'
 
 const Leads: FC = () => {
   const { leads, nextPage, prevPage, hasNextPage, hasPrevPage, currentPage, isLoading } = useLeads()
-  const statusCode = leads?.status_code
+  const statusCode = leads?.statusCode
   const hasLeads = leads?.data?.length
   const prevStatusCode = usePrevious(statusCode)
   const { addToast } = useToast()
@@ -20,9 +20,9 @@ const Leads: FC = () => {
     const data = {
       ...lead,
       email: lead.emails?.length ? lead.emails[0].email : '',
-      phone: lead.phone_numbers?.length ? lead.phone_numbers[0].number : '',
-      created_at: lead?.created_at
-        ? new Date(lead.created_at).toLocaleDateString(undefined, {
+      phone: lead.phoneNumbers?.length ? lead.phoneNumbers[0].number : '',
+      createdAt: lead?.createdAt
+        ? new Date(lead.createdAt).toLocaleDateString(undefined, {
             year: 'numeric',
             month: 'short',
             day: 'numeric'

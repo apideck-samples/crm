@@ -5,7 +5,7 @@ export const columns = [
   },
   {
     Header: 'Company',
-    accessor: 'company_name'
+    accessor: 'companyName'
   },
   {
     Header: 'Email',
@@ -17,6 +17,6 @@ export const columns = [
   },
   {
     Header: 'Date added',
-    accessor: 'created_at'
+    accessor: 'createdAt'
   }
 ]

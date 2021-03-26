@@ -3,7 +3,7 @@ import { createVaultSession, useConnection } from 'utils'
 
 import { Connection } from 'types/Connection'
 import Spinner from './Spinner'
-import { isConnected } from 'utils'
+import { isAuthorized } from 'utils'
 import { useEffect } from 'react'
 import { useLeads } from 'utils/useLeads'
 import useSWR from 'swr'
@@ -36,7 +36,7 @@ const SelectConnection = () => {
   }, [leads?.service, setConnection, addedConnections])
 
   const selectConnection = async (connection: Connection) => {
-    if (!isConnected(connection)) {
+    if (!isAuthorized(connection)) {
       const response = await createVaultSession()
       const sessionUrl = response?.data?.session_uri
       if (!sessionUrl) return
@@ -50,6 +50,12 @@ const SelectConnection = () => {
   const redirectToVault = async () => {
     const response = await createVaultSession()
     window.location.href = response.data?.session_uri
+  }
+
+  const statusColor = (connection: Connection) => {
+    if (!connection.enabled) return 'bg-gray-300'
+    if (!isAuthorized(connection)) return 'bg-yellow-400'
+    return 'bg-primary-500'
   }
 
   return (
@@ -72,7 +78,6 @@ const SelectConnection = () => {
                   />
                 )}
                 {isLoading && <Spinner className="w-6 h-6" />}
-
                 {!isLoading && <span>{connection?.name || 'No integrations'}</span>}
               </div>
               <svg className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -83,7 +88,6 @@ const SelectConnection = () => {
                 />
               </svg>
             </Menu.Button>
-
             <Transition
               show={open}
               enter="transition ease-out duration-100"
@@ -123,9 +127,9 @@ const SelectConnection = () => {
                             </span>
 
                             <span
-                              className={`inline-block w-2.5 h-2.5 mr-2 rounded-full ring-2 ring-white ${
-                                connection.enabled ? 'bg-primary-500' : 'bg-gray-300'
-                              }`}
+                              className={`inline-block w-2.5 h-2.5 mr-2 rounded-full ring-2 ring-white ${statusColor(
+                                connection
+                              )}`}
                             ></span>
                           </div>
                         )}

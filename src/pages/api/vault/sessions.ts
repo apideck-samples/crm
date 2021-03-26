@@ -1,7 +1,9 @@
-import fetch from 'node-fetch'
-import { headers } from '../_utils'
+import { process.env.NEXT_PUBLIC_UNIFY_BASE_URL, headers } from '../_utils'
+import { VercelRequest, VercelResponse } from '@vercel/node'
 
-module.exports = async (req, res) => {
+import fetch from 'node-fetch'
+
+module.exports = async (req: VercelRequest, res: VercelResponse) => {
   const { body } = req
   const raw = await fetch(`${process.env.NEXT_PUBLIC_UNIFY_BASE_URL}/vault/sessions`, {
     method: 'POST',

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { RefObject, useRef, useState } from 'react'
 
 import Link from 'next/link'
 import VaultSessionButton from './VaultSessionButton'
@@ -7,8 +7,8 @@ import { useRouter } from 'next/router'
 export const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false)
   const router = useRouter()
-  const navbarNode = useRef()
-  const hamburgerNode = useRef()
+  const navbarNode = useRef() as RefObject<HTMLDivElement>
+  const hamburgerNode = useRef() as RefObject<HTMLDivElement>
 
   return (
     <nav className="bg-white border-b border-cool-gray-200">

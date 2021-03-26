@@ -122,7 +122,11 @@ const SelectConnection = () => {
 
                             <span
                               className={`inline-block w-2.5 h-2.5 mr-2 rounded-full ring-2 ring-white ${
-                                connection.enabled ? 'bg-primary-500' : 'bg-gray-300'
+                                connection.enabled
+                                  ? isConnected(connection)
+                                    ? 'bg-primary-500'
+                                    : 'bg-yellow-400'
+                                  : 'bg-gray-300'
                               }`}
                             ></span>
                           </div>

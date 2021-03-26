@@ -1,7 +1,7 @@
-import { process.env.NEXT_PUBLIC_UNIFY_BASE_URL, headers } from '../_utils'
 import { VercelRequest, VercelResponse } from '@vercel/node'
 
 import fetch from 'node-fetch'
+import { headers } from '../_utils'
 
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
   const { body } = req

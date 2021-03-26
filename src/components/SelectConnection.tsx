@@ -72,7 +72,6 @@ const SelectConnection = () => {
                   />
                 )}
                 {isLoading && <Spinner className="w-6 h-6" />}
-
                 {!isLoading && <span>{connection?.name || 'No integrations'}</span>}
               </div>
               <svg className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -83,7 +82,6 @@ const SelectConnection = () => {
                 />
               </svg>
             </Menu.Button>
-
             <Transition
               show={open}
               enter="transition ease-out duration-100"

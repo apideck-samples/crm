@@ -33,22 +33,13 @@ const LeadForm = ({ defaultValues }: Props) => {
 
   useEffect(() => {
     const initializeArrayFields = () => {
-      const defaultEmailsValue = [
-        {
-          email: '',
-          type: 'default'
-        }
-      ]
-      const defaultPhoneValue = [
-        {
-          number: '',
-          type: 'default'
-        }
-      ]
-      const emailsValue = defaultValues?.emails?.length ? defaultValues?.emails : defaultEmailsValue
+      const emailsValue = defaultValues?.emails?.length
+        ? defaultValues?.emails
+        : [{ type: 'default' }]
       const defaultPhoneNumbers = defaultValues?.phoneNumbers?.length
         ? defaultValues?.phoneNumbers
-        : defaultPhoneValue
+        : [{ type: 'default' }]
+
       setValue('emails', emailsValue)
       setValue('phoneNumbers', defaultPhoneNumbers)
     }
@@ -135,7 +126,13 @@ const LeadForm = ({ defaultValues }: Props) => {
         {errors.companyName && (
           <div className="mt-2 text-xs text-red-600">{errors.companyName.message}</div>
         )}
-        <TextInput name="name" ref={register()} hidden value={defaultValues?.name || ''} />
+        <input
+          name="name"
+          ref={register()}
+          value={defaultValues?.name || ''}
+          type="hidden"
+          readOnly
+        />
         <div className="mt-4">
           <label htmlFor="firstName" className="block text-sm font-medium leading-5 text-gray-700">
             First name
@@ -171,6 +168,7 @@ const LeadForm = ({ defaultValues }: Props) => {
                 <TextInput
                   name={`emails[${index}].email`}
                   ref={register()}
+                  required={index === 0}
                   placeholder={`Email ${email.type === 'default' ? '(default)' : '(other)'}`}
                 />
                 <input
@@ -178,6 +176,7 @@ const LeadForm = ({ defaultValues }: Props) => {
                   name={`emails[${index}].type`}
                   value={email.type || 'other'}
                   ref={register()}
+                  readOnly
                 />
                 {email.id && (
                   <input
@@ -185,6 +184,7 @@ const LeadForm = ({ defaultValues }: Props) => {
                     name={`emails[${index}].id`}
                     ref={register()}
                     value={email.id}
+                    readOnly
                   />
                 )}
                 {errors.emails?.length && errors.emails[index] && (
@@ -241,6 +241,7 @@ const LeadForm = ({ defaultValues }: Props) => {
                   name={`phoneNumbers[${index}].phone_type`}
                   value={phone.phone_type || 'other'}
                   ref={register()}
+                  readOnly
                 />
                 {phone.id && (
                   <input
@@ -248,6 +249,7 @@ const LeadForm = ({ defaultValues }: Props) => {
                     name={`phoneNumbers[${index}].id`}
                     ref={register()}
                     value={phone.id}
+                    readOnly
                   />
                 )}
                 {errors.phoneNumbers?.length && errors.phoneNumbers[index] && (

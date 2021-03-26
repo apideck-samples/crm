@@ -10,10 +10,10 @@
     "@tailwindcss/forms" "^0.2.1"
     deepmerge "4.2.2"
 
-"@apideck/node@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@apideck/node/-/node-0.1.0.tgz#2d882ca69bc5f4776df84397d2d6108b609323e2"
-  integrity sha512-uoh/YGP5EUXLY2my0kuIaQe/t0a0ehZA9Bv0lYZ1xc+Lg007Nz9AgDWYp/3rSUDldxWak3tkKXY/S1rP+xdLLQ==
+"@apideck/node@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@apideck/node/-/node-0.2.0.tgz#255a59e04b25f9cff1a0cd1284a54d793067801c"
+  integrity sha512-3+bbP0uMf+2ZZota5Q4zLdTMdJlhzw6NxIR6CfXBegmCIId4HLydETN2nmfLBpc9FjKe1GuT2F9HSgaukkp+/w==
   dependencies:
     node-fetch "^2.6.1"
 

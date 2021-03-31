@@ -1,15 +1,14 @@
 import { Button, useModal, usePrevious, useToast } from '@apideck/components'
-import { FC, useEffect } from 'react'
-
 import { Lead } from '@apideck/node'
-import LeadForm from './LeadForm'
-import LoadingTable from './LoadingTable'
 import Table from 'components/Table'
 import { columns } from 'constants/columns'
+import { FC, useEffect } from 'react'
 import { useLeads } from 'utils'
+import LeadForm from './LeadForm'
+import LoadingTable from './LoadingTable'
 
 const Leads: FC = () => {
-  const { leads, nextPage, prevPage, hasNextPage, hasPrevPage, currentPage, isLoading } = useLeads()
+  const { leads, nextPage, prevPage, hasNextPage, hasPrevPage, isLoading } = useLeads()
   const statusCode = leads?.statusCode
   const hasLeads = leads?.data?.length
   const prevStatusCode = usePrevious(statusCode)
@@ -65,7 +64,7 @@ const Leads: FC = () => {
                 isLoading={isLoading}
               />
             )}
-            {(hasPrevPage || (!hasPrevPage && currentPage)) && (
+            {hasPrevPage && (
               <Button onClick={() => prevPage()} text="Previous" isLoading={isLoading} />
             )}
             {isLoading && <Button disabled={true} text="Loading" isLoading={isLoading} />}

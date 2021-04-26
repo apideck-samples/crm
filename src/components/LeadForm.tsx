@@ -23,11 +23,13 @@ const LeadForm = ({ defaultValues }: Props) => {
   })
   const { fields: emails, append: appendEmail, remove: removeEmail } = useFieldArray({
     control,
-    name: 'emails'
+    name: 'emails',
+    keyName: 'key'
   })
   const { fields: phoneNumbers, append: appendNumber, remove: removeNumber } = useFieldArray({
     control,
-    name: 'phoneNumbers'
+    name: 'phoneNumbers',
+    keyName: 'key'
   })
   const leadID = defaultValues?.id
 
@@ -35,13 +37,13 @@ const LeadForm = ({ defaultValues }: Props) => {
     const initializeArrayFields = () => {
       const emailsValue = defaultValues?.emails?.length
         ? defaultValues?.emails
-        : [{ type: 'default' }]
-      const defaultPhoneNumbers = defaultValues?.phoneNumbers?.length
+        : [{ type: 'primary' }]
+      const phoneNumbersValue = defaultValues?.phoneNumbers?.length
         ? defaultValues?.phoneNumbers
-        : [{ type: 'default' }]
+        : [{ type: 'primary' }]
 
       setValue('emails', emailsValue)
-      setValue('phoneNumbers', defaultPhoneNumbers)
+      setValue('phoneNumbers', phoneNumbersValue)
     }
 
     initializeArrayFields()
@@ -50,6 +52,7 @@ const LeadForm = ({ defaultValues }: Props) => {
   const onSubmit = (values: Lead) => {
     setIsLoading(true)
     setError(null)
+
     const response: Promise<LeadResponse> = leadID ? updateLead(leadID, values) : createLead(values)
 
     response
@@ -169,12 +172,12 @@ const LeadForm = ({ defaultValues }: Props) => {
                   name={`emails[${index}].email`}
                   ref={register()}
                   required={index === 0}
-                  placeholder={`Email ${email.type === 'default' ? '(default)' : '(other)'}`}
+                  placeholder={`Email ${email.type === 'primary' ? '(primary)' : '(secondary)'}`}
                 />
                 <input
                   type="hidden"
                   name={`emails[${index}].type`}
-                  value={email.type || 'other'}
+                  value={email.type || 'secondary'}
                   ref={register()}
                   readOnly
                 />
@@ -233,13 +236,13 @@ const LeadForm = ({ defaultValues }: Props) => {
                   name={`phoneNumbers[${index}].number`}
                   ref={register()}
                   placeholder={`Phone number ${
-                    phone.phone_type === 'default' ? '(default)' : '(other)'
+                    phone.type === 'primary' ? '(primary)' : '(secondary)'
                   }`}
                 />
                 <input
                   type="hidden"
-                  name={`phoneNumbers[${index}].phone_type`}
-                  value={phone.phone_type || 'other'}
+                  name={`phoneNumbers[${index}].type`}
+                  value={phone.type || 'secondary'}
                   ref={register()}
                   readOnly
                 />

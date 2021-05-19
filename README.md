@@ -1,6 +1,6 @@
 # CRM - Integrate CRM data with Apideck
 
-#### A sample project for viewing and managing leads with the [Apideck CRM API](https://developers.apideck.com/api-reference/crm).
+#### A sample project for viewing and managing leads with the [Apideck CRM API](https://developers.apideck.com/apis/crm/reference).
 
 The CRM API is a single API to push and query CRM data from +12 connectors. In this sample project, we use the [Apideck Node SDK](https://www.npmjs.com/package/@apideck/node) to create a customer relationship management tool that allows you to manage leads from multiple services (e.g., Salesforce, HubSpot, Copper, etc.)
 
@@ -18,7 +18,7 @@ Built with [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptla
 
 ### Installing the sample
 
-This project uses the CRM API with the Node SDK. Visit https://developers.apideck.com/api-reference/crm for documentation of the API and https://github.com/apideck-libraries/apideck-node for documentation about the SDK.
+This project uses the CRM API with the Node SDK. Visit https://developers.apideck.com/apis/crm/reference for documentation of the API and https://github.com/apideck-libraries/apideck-node for documentation about the SDK.
 
 #### Step 1: Update your environment variables
 
@@ -144,8 +144,8 @@ Before each push to the repository, we run `jest` to check if all tests are pass
 To learn more, take a look at the following resources:
 
 - [CRM API](https://www.apideck.com/crm-api) - info about the CRM API of Apideck
-- [CRM API Documentation](https://developers.apideck.com/api-reference/crm) - documentation of the CRM API
-- [Vault API Documentation](https://developers.apideck.com/api-reference/vault) - documentation of the Vault API
+- [CRM API Documentation](https://developers.apideck.com/apis/crm/reference) - documentation of the CRM API
+- [Vault API Documentation](https://developers.apideck.com/apis/vault/reference) - documentation of the Vault API
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API
 - [Vercel Serverless Functions](https://vercel.com/docs/serverless-functions/introduction) - learn more about serverless functions by using the `/pages/api` directory in Next.js projects
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial

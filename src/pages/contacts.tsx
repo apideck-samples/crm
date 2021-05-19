@@ -22,7 +22,7 @@ const ContactsPage: NextPage = () => {
           </div>
           <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
             <a
-              href="https://developers.apideck.com/api-reference/crm#tag/Contacts"
+              href="https://developers.apideck.com/apis/crm/reference#tag/Contacts"
               target="_blank"
               rel="noreferrer"
             >

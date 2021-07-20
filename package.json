@@ -17,7 +17,7 @@
   "dependencies": {
     "@apideck/components": "^0.2.0",
     "@apideck/node": "^0.2.0",
-    "@headlessui/react": "^0.3.1",
+    "@headlessui/react": "^0.3.2",
     "@testing-library/dom": "^7.30.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",

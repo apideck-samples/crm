@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Company } from '@apideck/node'
+import { swrOptions } from 'constants/swr-options'
 import { useConnection } from './useConnection'
 import { usePrevious } from '@apideck/components'
 import useSWR from 'swr'
@@ -24,7 +25,7 @@ export const useCompanies = () => {
   const getCompaniesUrl = serviceId
     ? `/api/crm/companies/get?serviceId=${serviceId}${cursorParams}`
     : null
-  const { data, error, revalidate } = useSWR(getCompaniesUrl, fetcher)
+  const { data, error, revalidate } = useSWR(getCompaniesUrl, fetcher, swrOptions)
 
   useEffect(() => {
     if (prevServiceId && prevServiceId !== serviceId) {

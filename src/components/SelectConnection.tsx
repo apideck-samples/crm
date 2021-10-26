@@ -3,13 +3,16 @@ import { createVaultSession, useConnection } from 'utils'
 
 import { Connection } from 'types/Connection'
 import Spinner from './Spinner'
+import { swrOptions } from 'constants/swr-options'
 import { useEffect } from 'react'
 import { useLeads } from 'utils/useLeads'
 import useSWR from 'swr'
+import { useSession } from 'utils/useSession'
 import { validateEnv } from 'utils/validateEnv'
 
 const SelectConnection = () => {
   const { setConnection, connection } = useConnection()
+  const { session } = useSession()
   const { leads } = useLeads()
 
   const getConnections = async (url: string) => {
@@ -18,7 +21,13 @@ const SelectConnection = () => {
     return await response.json()
   }
 
-  const { data: connections, error } = useSWR(`/api/vault/connections`, getConnections)
+  console.log('session', session)
+
+  const { data: connections, error } = useSWR(
+    `/api/vault/connections?consumerId=${session?.consumerId}`,
+    getConnections,
+    swrOptions
+  )
   const isLoading = !connections && !error
   const callableConnections = connections?.data?.filter(
     (connection: Connection) => connection.state === 'callable'
@@ -42,22 +51,25 @@ const SelectConnection = () => {
       return
     }
 
-    const response = await createVaultSession()
-    const sessionUrl = response?.data?.session_uri
-    if (!sessionUrl) return
-
     const redirectUrl = `https://vault.apideck.com/integrations/${connection.unified_api}/${connection?.service_id}`
     if (connection.state === 'available') {
       // Enable integration in vault
       redirectUrl.concat('/enable')
     }
-    const token = sessionUrl.substring(sessionUrl.lastIndexOf('/') + 1)
-    window.location.href = `${redirectUrl}?jwt=${token}`
+
+    window.location.href = `${redirectUrl}?jwt=${session?.jwt}`
   }
 
   const redirectToVault = async () => {
-    const response = await createVaultSession()
-    window.location.href = response.data?.session_uri
+    let url
+    if (session) {
+      url = `https://vault.apideck.com/session/${session?.jwt}`
+    } else {
+      const response = await createVaultSession()
+      url = response.data?.session_uri
+    }
+
+    window.location.href = url
   }
 
   const statusColor = (connection: Connection) => {

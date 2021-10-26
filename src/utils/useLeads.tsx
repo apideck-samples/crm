@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Lead } from '@apideck/node'
+import { swrOptions } from 'constants/swr-options'
 import { useConnection } from './useConnection'
 import { usePrevious } from '@apideck/components'
 import useSWR from 'swr'
@@ -22,7 +23,7 @@ export const useLeads = () => {
   const cursorParams =
     cursor && (!prevServiceId || prevServiceId === serviceId) ? `&cursor=${cursor}` : ''
   const getLeadsUrl = serviceId ? `/api/crm/leads/get?serviceId=${serviceId}${cursorParams}` : null
-  const { data, error, revalidate } = useSWR(getLeadsUrl, fetcher)
+  const { data, error, revalidate } = useSWR(getLeadsUrl, fetcher, swrOptions)
 
   useEffect(() => {
     if (prevServiceId && prevServiceId !== serviceId) {

@@ -23,10 +23,10 @@ This project uses the CRM API with the Node SDK. Visit https://developers.apidec
 #### Step 1: Update your environment variables
 
 - Copy `.env.example` and create a `.env.local` file
-- Add your API key: `NEXT_PUBLIC_UNIFY_API_KEY=<your-api-key>`
+- Add your API key: `NEXT_PUBLIC_API_KEY=<your-api-key>`
 - Add your Application ID: `NEXT_PUBLIC_APP_ID=<your-app-id>`
 - Your env should also include `NEXT_PUBLIC_CONSUMER_ID=test-consumer`
-- Your env should also include `NEXT_PUBLIC_UNIFY_API_URL=https://unify.apideck.com`
+- Your env should also include `NEXT_PUBLIC_API_URL=https://unify.apideck.com`
 - Optional: If you do not want to scope this application to your Apideck account, you can change the consumer ID. The consumer ID gives you the flexibility to build completely independent or multi-tenant apps.
 
 #### Step 2: Install dependencies

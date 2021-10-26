@@ -59,7 +59,7 @@ const Leads: FC = () => {
             columns={columns}
             data={mappedData}
             actionText="Edit"
-            action={(props) =>
+            action={(props: any) =>
               addModal(<LeadForm defaultValues={props} />, {
                 style: { maxWidth: 480 }
               })

@@ -1,8 +1,6 @@
 import { Button } from '@apideck/components'
 import Layout from '../components/Layout'
-import Navbar from 'components/Navbar'
 import { NextPage } from 'next'
-import PageHeader from 'components/PageHeader'
 import { useConnection } from 'utils'
 
 const ContactsPage: NextPage = () => {

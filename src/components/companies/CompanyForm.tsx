@@ -1,11 +1,11 @@
 import { Button, TextInput, useModal, useToast } from '@apideck/components'
-import { useEffect, useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
 
 import { Company } from '@apideck/node'
 import { CompanyResponse } from 'types/CompanyResponse'
 import { mutate } from 'swr'
 import { useCompanies } from 'utils'
+import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 
 interface Props {
   defaultValues?: Company

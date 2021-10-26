@@ -5,10 +5,12 @@ import { swrOptions } from 'constants/swr-options'
 import { useConnection } from './useConnection'
 import { usePrevious } from '@apideck/components'
 import useSWR from 'swr'
+import { useSession } from './useSession'
 import { validateEnv } from './validateEnv'
 
 export const useLeads = () => {
   const [cursor, setCursor] = useState(null)
+  const { session } = useSession()
   const { connection } = useConnection()
   const serviceId = connection?.service_id || ''
   const prevServiceId = usePrevious(serviceId)
@@ -22,7 +24,9 @@ export const useLeads = () => {
 
   const cursorParams =
     cursor && (!prevServiceId || prevServiceId === serviceId) ? `&cursor=${cursor}` : ''
-  const getLeadsUrl = serviceId ? `/api/crm/leads/get?serviceId=${serviceId}${cursorParams}` : null
+  const getLeadsUrl = serviceId
+    ? `/api/crm/leads/get?consumerId=${session?.consumerId}&serviceId=${serviceId}${cursorParams}`
+    : null
   const { data, error, revalidate } = useSWR(getLeadsUrl, fetcher, swrOptions)
 
   useEffect(() => {

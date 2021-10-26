@@ -45,7 +45,23 @@ const IndexPage = ({ jwt, token }: Props) => {
           </div>
         </div>
       )}
-      <Leads />
+      {connection ? (
+        <Leads />
+      ) : (
+        <div className="text-center">
+          <h2 className="mt-2 text-lg font-medium text-gray-900">No integration selected</h2>
+          <p className="mt-1 mb-4 text-sm text-gray-500">
+            If no options are available{' '}
+            <a
+              href={`https://vault.apideck.com/session/${session?.jwt}`}
+              className="font-medium text-gray-700 hover:text-primary-600"
+            >
+              visit Vault
+            </a>{' '}
+            to add and configure integrations
+          </p>
+        </div>
+      )}
     </Layout>
   )
 }

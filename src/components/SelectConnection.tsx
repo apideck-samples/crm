@@ -21,8 +21,6 @@ const SelectConnection = () => {
     return await response.json()
   }
 
-  console.log('session', session)
-
   const { data: connections, error } = useSWR(
     `/api/vault/connections?consumerId=${session?.consumerId}`,
     getConnections,
@@ -98,7 +96,7 @@ const SelectConnection = () => {
                   />
                 )}
                 {isLoading && <Spinner className="w-6 h-6" />}
-                {!isLoading && <span>{connection?.name || 'No integrations'}</span>}
+                {!isLoading && <span>{connection?.name || 'Select integration'}</span>}
               </div>
               <svg className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -123,7 +121,7 @@ const SelectConnection = () => {
                 className="absolute right-0 z-10 w-full mt-2 origin-top-right bg-white border divide-y rounded-md outline-none border-cool-gray-200 divide-cool-gray-100"
               >
                 <div className="py-1">
-                  {callableConnections?.map((connection: Connection, i: number) => {
+                  {connections?.data?.map((connection: Connection, i: number) => {
                     return (
                       <Menu.Item key={i}>
                         {({ active }) => (
@@ -180,7 +178,7 @@ const SelectConnection = () => {
                         </svg>
                         <span className="flex-1 min-w-0">
                           <span className="text-sm font-medium text-gray-900 truncate">
-                            Add integration
+                            Manage integrations
                           </span>
                         </span>
                       </div>

@@ -1,14 +1,13 @@
 import { Column, useSortBy, useTable } from 'react-table'
 
-import LeadForm from './LeadForm'
-import { useModal } from '@apideck/components'
-
 interface Props {
   columns: Column[]
   data: any[]
+  action?: any
+  actionText?: string
 }
 
-const Table = ({ columns, data }: Props) => {
+const Table = ({ columns, data, action, actionText = 'Edit' }: Props) => {
   const { getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
     {
       columns,
@@ -16,7 +15,6 @@ const Table = ({ columns, data }: Props) => {
     },
     useSortBy
   )
-  const { addModal } = useModal()
 
   return (
     <table className="min-w-full divide-y divide-cool-gray-200">
@@ -69,9 +67,11 @@ const Table = ({ columns, data }: Props) => {
                 </span>
               </th>
             ))}
-            <th scope="col" className="relative px-6 py-3">
-              <span className="sr-only">Edit</span>
-            </th>
+            {action ? (
+              <th scope="col" className="relative px-6 py-3">
+                <span className="sr-only">Edit</span>
+              </th>
+            ) : null}
           </tr>
         ))}
       </thead>
@@ -85,7 +85,7 @@ const Table = ({ columns, data }: Props) => {
               {row.cells.map((cell: any, i: number) => {
                 return (
                   <td
-                    className="py-4 space-x-6 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
+                    className="max-w-lg py-4 pr-2 space-x-6 text-sm font-medium text-gray-900 truncate whitespace-nowrap"
                     {...cell.getCellProps()}
                     key={`cell-${i}`}
                   >
@@ -93,18 +93,16 @@ const Table = ({ columns, data }: Props) => {
                   </td>
                 )
               })}
-              <td className="py-4 text-sm font-medium text-right whitespace-nowrap">
-                <button
-                  className="font-semibold text-blue-600 cursor-pointer hover:text-blue-900"
-                  onClick={() =>
-                    addModal(<LeadForm defaultValues={row.original} />, {
-                      style: { maxWidth: 480 }
-                    })
-                  }
-                >
-                  Edit
-                </button>
-              </td>
+              {action ? (
+                <td className="py-4 text-sm font-medium text-right whitespace-nowrap">
+                  <button
+                    className="font-semibold text-blue-600 cursor-pointer hover:text-blue-900"
+                    onClick={() => action(row.original)}
+                  >
+                    {actionText}
+                  </button>
+                </td>
+              ) : null}
             </tr>
           )
         })}

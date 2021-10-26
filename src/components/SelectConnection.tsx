@@ -3,7 +3,6 @@ import { createVaultSession, useConnection } from 'utils'
 
 import { Connection } from 'types/Connection'
 import Spinner from './Spinner'
-import { isAuthorized } from 'utils'
 import { useEffect } from 'react'
 import { useLeads } from 'utils/useLeads'
 import useSWR from 'swr'
@@ -21,30 +20,39 @@ const SelectConnection = () => {
 
   const { data: connections, error } = useSWR(`/api/vault/connections`, getConnections)
   const isLoading = !connections && !error
-  const addedConnections = connections?.data?.filter((connection: Connection) => connection.added)
+  const callableConnections = connections?.data?.filter(
+    (connection: Connection) => connection.state === 'callable'
+  )
 
   useEffect(() => {
-    if (leads?.service && addedConnections.length && !connection) {
-      const connector = addedConnections.find(
+    if (leads?.service && callableConnections.length && !connection) {
+      const connector = callableConnections.find(
         (connection: Connection) => connection.service_id === leads?.service
       )
       setConnection(connector)
-    } else if (!connection && addedConnections?.length) {
-      setConnection(addedConnections[0])
+    } else if (!connection && callableConnections?.length) {
+      setConnection(callableConnections[0])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [leads?.service, setConnection, addedConnections])
+  }, [leads?.service, setConnection, callableConnections])
 
   const selectConnection = async (connection: Connection) => {
-    if (!isAuthorized(connection)) {
-      const response = await createVaultSession()
-      const sessionUrl = response?.data?.session_uri
-      if (!sessionUrl) return
-      const redirectUrl = `https://vault.apideck.com/integrations/crm/${connection?.service_id}/enable`
-      const token = sessionUrl.substring(sessionUrl.lastIndexOf('/') + 1)
-      window.location.href = `${redirectUrl}?jwt=${token}`
+    if (connection.state === 'callable') {
+      setConnection(connection)
+      return
     }
-    setConnection(connection)
+
+    const response = await createVaultSession()
+    const sessionUrl = response?.data?.session_uri
+    if (!sessionUrl) return
+
+    const redirectUrl = `https://vault.apideck.com/integrations/${connection.unified_api}/${connection?.service_id}`
+    if (connection.state === 'available') {
+      // Enable integration in vault
+      redirectUrl.concat('/enable')
+    }
+    const token = sessionUrl.substring(sessionUrl.lastIndexOf('/') + 1)
+    window.location.href = `${redirectUrl}?jwt=${token}`
   }
 
   const redirectToVault = async () => {
@@ -54,8 +62,8 @@ const SelectConnection = () => {
 
   const statusColor = (connection: Connection) => {
     if (!connection.enabled) return 'bg-gray-300'
-    if (!isAuthorized(connection)) return 'bg-yellow-400'
-    return 'bg-primary-500'
+    if (connection.state !== 'callable') return 'bg-yellow-400'
+    return 'bg-green-400'
   }
 
   return (
@@ -103,7 +111,7 @@ const SelectConnection = () => {
                 className="absolute right-0 z-10 w-full mt-2 origin-top-right bg-white border divide-y rounded-md outline-none border-cool-gray-200 divide-cool-gray-100"
               >
                 <div className="py-1">
-                  {addedConnections?.map((connection: Connection, i: number) => {
+                  {callableConnections?.map((connection: Connection, i: number) => {
                     return (
                       <Menu.Item key={i}>
                         {({ active }) => (

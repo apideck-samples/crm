@@ -1,24 +1,22 @@
 import { Button } from '@apideck/components'
-import Navbar from 'components/Navbar'
-import PageHeader from 'components/PageHeader'
-import { NextPage } from 'next'
-import { useConnection } from 'utils'
 import Layout from '../components/Layout'
+import Navbar from 'components/Navbar'
+import { NextPage } from 'next'
+import PageHeader from 'components/PageHeader'
+import { useConnection } from 'utils'
 
 const ContactsPage: NextPage = () => {
   const { connection } = useConnection()
 
   return (
     <Layout title={`Contacts - ${connection?.name + ' | Apideck CRM'}`}>
-      <Navbar />
-      <PageHeader title="Contacts" />
       <div className="pl-2 mx-auto my-12 overflow-hidden max-w-7xl sm:px-6 lg:px-8">
         <h3 className="text-lg font-medium leading-6 text-gray-900">
-          This resource is not yet implemented
+          This resource is not yet supported
         </h3>
         <div className="mt-2 sm:flex sm:items-start sm:justify-between">
           <div className="max-w-xl text-sm text-gray-500">
-            <p>Use the CRM API to implement contacts</p>
+            <p>The Apideck CRM is still in development</p>
           </div>
           <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
             <a

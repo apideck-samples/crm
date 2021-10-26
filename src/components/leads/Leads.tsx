@@ -1,11 +1,12 @@
 import { Button, useModal, usePrevious, useToast } from '@apideck/components'
+import { FC, useEffect } from 'react'
+
 import { Lead } from '@apideck/node'
+import LeadForm from './LeadForm'
+import LoadingTable from '../LoadingTable'
 import Table from 'components/Table'
 import { columns } from 'constants/columns'
-import { FC, useEffect } from 'react'
 import { useLeads } from 'utils'
-import LeadForm from './LeadForm'
-import LoadingTable from './LoadingTable'
 
 const Leads: FC = () => {
   const { leads, nextPage, prevPage, hasNextPage, hasPrevPage, isLoading } = useLeads()
@@ -48,12 +49,23 @@ const Leads: FC = () => {
         {!isLoading && !leads?.error && (
           <div className="mb-4 sm:flex sm:justify-end">
             <Button
-              text="Create a lead"
+              text="New lead"
               onClick={() => addModal(<LeadForm />, { style: { maxWidth: 480 } })}
             />
           </div>
         )}
-        {!isLoading && hasLeads && <Table columns={columns} data={mappedData} />}
+        {!isLoading && hasLeads && (
+          <Table
+            columns={columns}
+            data={mappedData}
+            actionText="Edit"
+            action={(props) =>
+              addModal(<LeadForm defaultValues={props} />, {
+                style: { maxWidth: 480 }
+              })
+            }
+          />
+        )}
         {(hasLeads || isLoading) && (
           <div className="flex flex-row-reverse py-4 border-gray-200">
             {hasNextPage && (

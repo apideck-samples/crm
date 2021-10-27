@@ -2,15 +2,18 @@ import { Menu, Transition } from '@headlessui/react'
 import { createVaultSession, useConnection } from 'utils'
 
 import { Connection } from 'types/Connection'
+import Image from 'next/image'
 import Spinner from './Spinner'
-import { isAuthorized } from 'utils'
+import { swrOptions } from 'constants/swr-options'
 import { useEffect } from 'react'
 import { useLeads } from 'utils/useLeads'
 import useSWR from 'swr'
+import { useSession } from 'utils/useSession'
 import { validateEnv } from 'utils/validateEnv'
 
 const SelectConnection = () => {
   const { setConnection, connection } = useConnection()
+  const { session } = useSession()
   const { leads } = useLeads()
 
   const getConnections = async (url: string) => {
@@ -19,43 +22,59 @@ const SelectConnection = () => {
     return await response.json()
   }
 
-  const { data: connections, error } = useSWR(`/api/vault/connections`, getConnections)
+  const { data: connections, error } = useSWR(
+    `/api/vault/connections?consumerId=${session?.consumerId}`,
+    getConnections,
+    swrOptions
+  )
   const isLoading = !connections && !error
-  const addedConnections = connections?.data?.filter((connection: Connection) => connection.added)
+  const callableConnections = connections?.data?.filter(
+    (connection: Connection) => connection.state === 'callable'
+  )
 
   useEffect(() => {
-    if (leads?.service && addedConnections.length && !connection) {
-      const connector = addedConnections.find(
+    if (leads?.service && callableConnections.length && !connection) {
+      const connector = callableConnections.find(
         (connection: Connection) => connection.service_id === leads?.service
       )
       setConnection(connector)
-    } else if (!connection && addedConnections?.length) {
-      setConnection(addedConnections[0])
+    } else if (!connection && callableConnections?.length) {
+      setConnection(callableConnections[0])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [leads?.service, setConnection, addedConnections])
+  }, [leads?.service, setConnection, callableConnections])
 
   const selectConnection = async (connection: Connection) => {
-    if (!isAuthorized(connection)) {
-      const response = await createVaultSession()
-      const sessionUrl = response?.data?.session_uri
-      if (!sessionUrl) return
-      const redirectUrl = `https://vault.apideck.com/integrations/crm/${connection?.service_id}/enable`
-      const token = sessionUrl.substring(sessionUrl.lastIndexOf('/') + 1)
-      window.location.href = `${redirectUrl}?jwt=${token}`
+    if (connection.state === 'callable') {
+      setConnection(connection)
+      return
     }
-    setConnection(connection)
+
+    const redirectUrl = `https://vault.apideck.com/integrations/${connection.unified_api}/${connection?.service_id}`
+    if (connection.state === 'available') {
+      // Enable integration in vault
+      redirectUrl.concat('/enable')
+    }
+
+    window.location.href = `${redirectUrl}?jwt=${session?.jwt}`
   }
 
   const redirectToVault = async () => {
-    const response = await createVaultSession()
-    window.location.href = response.data?.session_uri
+    let url
+    if (session) {
+      url = `https://vault.apideck.com/session/${session?.jwt}`
+    } else {
+      const response = await createVaultSession()
+      url = response.data?.session_uri
+    }
+
+    window.location.href = url
   }
 
   const statusColor = (connection: Connection) => {
     if (!connection.enabled) return 'bg-gray-300'
-    if (!isAuthorized(connection)) return 'bg-yellow-400'
-    return 'bg-primary-500'
+    if (connection.state !== 'callable') return 'bg-yellow-400'
+    return 'bg-green-400'
   }
 
   return (
@@ -67,18 +86,20 @@ const SelectConnection = () => {
               className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-blue-800 bg-blue-100 border border-blue-200 rounded-md group hover:bg-cool-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-cool-gray-100 focus:ring-blue-600"
               style={{ minWidth: 240 }}
             >
-              <div>
+              <div className="flex items-center">
                 {!isLoading && connection?.icon && (
-                  <img
-                    className={`inline-block w-6 h-6 mr-2 rounded-full ${
-                      isLoading ? 'animate-spin opacity-20' : ''
-                    }`}
-                    src={!isLoading && connection?.icon ? connection?.icon : '/img/logo.png'}
-                    alt=""
-                  />
+                  <div className="w-6 h-6 mr-2">
+                    <Image
+                      className={`rounded-full ${isLoading ? 'animate-spin opacity-20' : ''}`}
+                      src={!isLoading && connection?.icon ? connection?.icon : '/img/logo.png'}
+                      alt={connection.name}
+                      height={28}
+                      width={28}
+                    />
+                  </div>
                 )}
                 {isLoading && <Spinner className="w-6 h-6" />}
-                {!isLoading && <span>{connection?.name || 'No integrations'}</span>}
+                {!isLoading && <span>{connection?.name || 'Select integration'}</span>}
               </div>
               <svg className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -103,7 +124,7 @@ const SelectConnection = () => {
                 className="absolute right-0 z-10 w-full mt-2 origin-top-right bg-white border divide-y rounded-md outline-none border-cool-gray-200 divide-cool-gray-100"
               >
                 <div className="py-1">
-                  {addedConnections?.map((connection: Connection, i: number) => {
+                  {connections?.data?.map((connection: Connection, i: number) => {
                     return (
                       <Menu.Item key={i}>
                         {({ active }) => (
@@ -115,11 +136,15 @@ const SelectConnection = () => {
                               connection.enabled ? '' : 'opacity-60'
                             }`}
                           >
-                            <img
-                              className="flex-shrink-0 w-6 h-6 m-2 rounded-full"
-                              src={connection.icon}
-                              alt=""
-                            />
+                            <div className="flex p-2">
+                              <Image
+                                className="rounded-sm"
+                                src={connection.icon}
+                                alt={connection.name}
+                                height={28}
+                                width={28}
+                              />
+                            </div>
                             <span className="flex-1 min-w-0">
                               <span className="text-sm font-medium text-gray-900 truncate">
                                 {connection.name}
@@ -160,7 +185,7 @@ const SelectConnection = () => {
                         </svg>
                         <span className="flex-1 min-w-0">
                           <span className="text-sm font-medium text-gray-900 truncate">
-                            Add integration
+                            Manage integrations
                           </span>
                         </span>
                       </div>

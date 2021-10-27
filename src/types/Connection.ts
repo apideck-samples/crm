@@ -12,7 +12,7 @@ export interface Connection {
   unified_api: string
   auth_type: string | null
   name: string
-  added: boolean
+  state: 'available' | 'added' | 'authorized' | 'callable'
   icon: string
   logo?: string
   website?: string

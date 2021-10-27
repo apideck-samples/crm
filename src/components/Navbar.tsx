@@ -1,5 +1,6 @@
 import { RefObject, useRef, useState } from 'react'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import VaultSessionButton from './VaultSessionButton'
 import { useRouter } from 'next/router'
@@ -18,7 +19,13 @@ export const Navbar = () => {
             <div className="flex-shrink-0">
               <Link href="/">
                 <a className="flex">
-                  <img className="w-20 h-8" src="/img/logo-black.svg" alt="" />{' '}
+                  <Image
+                    width={80}
+                    height={32}
+                    className="w-20 h-8"
+                    src="/img/logo-black.svg"
+                    alt="logo"
+                  />{' '}
                   <span className="mt-0.5 ml-0.5 font-bold text-lg text-primary-700 text-size-lg">
                     CRM
                   </span>

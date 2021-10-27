@@ -2,6 +2,7 @@ import { FC, useState } from 'react'
 
 import { Button } from '@apideck/components'
 import { createVaultSession } from 'utils'
+import { useSession } from 'utils/useSession'
 
 interface Props {
   text: string
@@ -15,9 +16,15 @@ const VaultSessionButton: FC<Props> = ({
   redirectUrl
 }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const { session } = useSession()
 
   const redirectToVault = async () => {
     setIsLoading(true)
+    if (session?.jwt) {
+      window.location.href = `https://vault.apideck.com/session/${session?.jwt}`
+      return
+    }
+
     const response = await createVaultSession()
     const url = response.data?.session_uri
     if (!url) return

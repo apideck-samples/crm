@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
 
-import { Lead } from '@apideck/node'
+import { Company } from '@apideck/node'
 import { swrOptions } from 'constants/swr-options'
 import { useConnection } from './useConnection'
 import { usePrevious } from '@apideck/components'
 import useSWR from 'swr'
-import { useSession } from './useSession'
 import { validateEnv } from './validateEnv'
 
-export const useLeads = () => {
+export const useCompanies = () => {
   const [cursor, setCursor] = useState(null)
-  const { session } = useSession()
   const { connection } = useConnection()
   const serviceId = connection?.service_id || ''
   const prevServiceId = usePrevious(serviceId)
@@ -24,10 +22,10 @@ export const useLeads = () => {
 
   const cursorParams =
     cursor && (!prevServiceId || prevServiceId === serviceId) ? `&cursor=${cursor}` : ''
-  const getLeadsUrl = serviceId
-    ? `/api/crm/leads/get?consumerId=${session?.consumerId}&serviceId=${serviceId}${cursorParams}`
+  const getCompaniesUrl = serviceId
+    ? `/api/crm/companies/get?serviceId=${serviceId}${cursorParams}`
     : null
-  const { data, error, revalidate } = useSWR(getLeadsUrl, fetcher, swrOptions)
+  const { data, error, revalidate } = useSWR(getCompaniesUrl, fetcher, swrOptions)
 
   useEffect(() => {
     if (prevServiceId && prevServiceId !== serviceId) {
@@ -35,24 +33,24 @@ export const useLeads = () => {
     }
   }, [serviceId, prevServiceId])
 
-  const createLead = async (values: Lead) => {
-    const response = await fetch(`/api/crm/leads/post?serviceId=${serviceId}`, {
+  const createCompany = async (values: Company) => {
+    const response = await fetch(`/api/crm/companies/post?serviceId=${serviceId}`, {
       method: 'POST',
       body: JSON.stringify(values)
     })
     return response.json()
   }
 
-  const updateLead = async (id: string, values: Lead) => {
-    const response = await fetch(`/api/crm/leads/patch?serviceId=${serviceId}`, {
+  const updateCompany = async (id: string, values: Company) => {
+    const response = await fetch(`/api/crm/companies/patch?serviceId=${serviceId}`, {
       method: 'PATCH',
       body: JSON.stringify({ id, lead: values })
     })
     return response.json()
   }
 
-  const deleteLead = async (id: string) => {
-    const response = await fetch(`/api/crm/leads/delete?serviceId=${serviceId}`, {
+  const deleteCompany = async (id: string) => {
+    const response = await fetch(`/api/crm/companies/delete?serviceId=${serviceId}`, {
       method: 'DELETE',
       body: JSON.stringify({ id })
     })
@@ -79,7 +77,7 @@ export const useLeads = () => {
   }, [cursor, prevCursor, revalidate])
 
   return {
-    leads: data,
+    companies: data,
     isLoading: !error && !data,
     isError: data?.error || error,
     hasNextPage: data?.meta?.cursors?.next,
@@ -87,9 +85,9 @@ export const useLeads = () => {
     hasPrevPage: data?.meta?.cursors?.previous,
     nextPage,
     prevPage,
-    createLead,
-    updateLead,
-    deleteLead,
-    getLeadsUrl
+    createCompany,
+    updateCompany,
+    deleteCompany,
+    getCompaniesUrl
   }
 }

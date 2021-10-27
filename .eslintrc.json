@@ -5,13 +5,7 @@
     "jest": true,
     "node": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["next", "prettier"],
   "ignorePatterns": ["node_modules/*", ".next/*", ".vscode", ".gitignore", "tailwind.config.js"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -21,7 +15,7 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "jsx-a11y"],
+  "plugins": ["@typescript-eslint", "jsx-a11y"],
   "settings": {
     "react": {
       "version": "latest"

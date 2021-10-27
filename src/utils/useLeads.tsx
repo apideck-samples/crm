@@ -36,26 +36,35 @@ export const useLeads = () => {
   }, [serviceId, prevServiceId])
 
   const createLead = async (values: Lead) => {
-    const response = await fetch(`/api/crm/leads/post?serviceId=${serviceId}`, {
-      method: 'POST',
-      body: JSON.stringify(values)
-    })
+    const response = await fetch(
+      `/api/crm/leads/post?consumerId=${session?.consumerId}&serviceId=${serviceId}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(values)
+      }
+    )
     return response.json()
   }
 
   const updateLead = async (id: string, values: Lead) => {
-    const response = await fetch(`/api/crm/leads/patch?serviceId=${serviceId}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ id, lead: values })
-    })
+    const response = await fetch(
+      `/api/crm/leads/patch?consumerId=${session?.consumerId}&serviceId=${serviceId}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ id, lead: values })
+      }
+    )
     return response.json()
   }
 
   const deleteLead = async (id: string) => {
-    const response = await fetch(`/api/crm/leads/delete?serviceId=${serviceId}`, {
-      method: 'DELETE',
-      body: JSON.stringify({ id })
-    })
+    const response = await fetch(
+      `/api/crm/leads/delete?consumerId=${session?.consumerId}&serviceId=${serviceId}`,
+      {
+        method: 'DELETE',
+        body: JSON.stringify({ id })
+      }
+    )
     return response.json()
   }
 

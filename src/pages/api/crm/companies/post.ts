@@ -1,10 +1,16 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
 
-import { apideck } from '../../_utils'
+import { init } from '../../_utils'
+
+interface Params {
+  serviceId?: string
+  consumerId?: string
+}
 
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
-  const { body, query } = req
-  const { serviceId }: { serviceId?: string } = query
+  const { body } = req
+  const { consumerId, serviceId }: Params = req.query
+  const apideck = init(consumerId)
   const company = JSON.parse(body)
 
   const result = await apideck.crm.companies

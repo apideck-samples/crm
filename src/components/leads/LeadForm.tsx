@@ -62,7 +62,7 @@ const LeadForm = ({ defaultValues }: Props) => {
           removeModal()
           addToast({
             title: `Successfully ${leadID ? 'updated' : 'created'}!`,
-            description: `${values.firstName} is successfully ${leadID ? 'updated' : 'added'}`,
+            description: `${values.name} is successfully ${leadID ? 'updated' : 'added'}`,
             type: 'success',
             autoClose: true
           })
@@ -129,37 +129,19 @@ const LeadForm = ({ defaultValues }: Props) => {
         {errors.companyName && (
           <div className="mt-2 text-xs text-red-600">{errors.companyName.message}</div>
         )}
-        <input
-          name="name"
-          ref={register()}
-          value={defaultValues?.name || ''}
-          type="hidden"
-          readOnly
-        />
         <div className="mt-4">
-          <label htmlFor="firstName" className="block text-sm font-medium leading-5 text-gray-700">
-            First name
+          <label htmlFor="name" className="block text-sm font-medium leading-5 text-gray-700">
+            Name
           </label>
           <TextInput
             className="mt-1"
-            name="firstName"
+            name="name"
             required
             ref={register({
               required: 'Please enter a first name'
             })}
           />
-          {errors.firstName && (
-            <div className="mt-2 text-xs text-red-600">{errors.firstName.message}</div>
-          )}
-        </div>
-        <div className="mt-4">
-          <label htmlFor="lastName" className="block text-sm font-medium leading-5 text-gray-700">
-            Last name
-          </label>
-          <TextInput className="mt-1" name="lastName" ref={register()} />
-          {errors.lastName && (
-            <div className="mt-2 text-xs text-red-600">{errors.lastName.message}</div>
-          )}
+          {errors.name && <div className="mt-2 text-xs text-red-600">{errors.name.message}</div>}
         </div>
         <div className="mt-4">
           <label htmlFor="emails" className="block text-sm font-medium leading-5 text-gray-700">

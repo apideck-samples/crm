@@ -1,7 +1,9 @@
 import { Apideck } from '@apideck/node'
 
-export const apideck = new Apideck({
-  apiKey: process.env.NEXT_PUBLIC_API_KEY,
-  applicationId: `${process.env.NEXT_PUBLIC_APP_ID}`,
-  consumerId: process.env.NEXT_PUBLIC_CONSUMER_ID
-})
+export const init = (consumerId?: string) => {
+  return new Apideck({
+    apiKey: process.env.NEXT_PUBLIC_API_KEY,
+    applicationId: `${process.env.NEXT_PUBLIC_APP_ID}`,
+    consumerId
+  })
+}

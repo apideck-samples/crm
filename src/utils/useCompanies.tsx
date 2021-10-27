@@ -5,11 +5,13 @@ import { swrOptions } from 'constants/swr-options'
 import { useConnection } from './useConnection'
 import { usePrevious } from '@apideck/components'
 import useSWR from 'swr'
+import { useSession } from './useSession'
 import { validateEnv } from './validateEnv'
 
 export const useCompanies = () => {
   const [cursor, setCursor] = useState(null)
   const { connection } = useConnection()
+  const { session } = useSession()
   const serviceId = connection?.service_id || ''
   const prevServiceId = usePrevious(serviceId)
   const prevCursor = usePrevious(cursor)
@@ -23,7 +25,7 @@ export const useCompanies = () => {
   const cursorParams =
     cursor && (!prevServiceId || prevServiceId === serviceId) ? `&cursor=${cursor}` : ''
   const getCompaniesUrl = serviceId
-    ? `/api/crm/companies/get?serviceId=${serviceId}${cursorParams}`
+    ? `/api/crm/companies/get?consumerId=${session?.consumerId}&serviceId=${serviceId}${cursorParams}`
     : null
   const { data, error, revalidate } = useSWR(getCompaniesUrl, fetcher, swrOptions)
 
@@ -34,26 +36,35 @@ export const useCompanies = () => {
   }, [serviceId, prevServiceId])
 
   const createCompany = async (values: Company) => {
-    const response = await fetch(`/api/crm/companies/post?serviceId=${serviceId}`, {
-      method: 'POST',
-      body: JSON.stringify(values)
-    })
+    const response = await fetch(
+      `/api/crm/companies/post?consumerId=${session?.consumerId}&serviceId=${serviceId}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(values)
+      }
+    )
     return response.json()
   }
 
   const updateCompany = async (id: string, values: Company) => {
-    const response = await fetch(`/api/crm/companies/patch?serviceId=${serviceId}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ id, lead: values })
-    })
+    const response = await fetch(
+      `/api/crm/companies/patch?consumerId=${session?.consumerId}&serviceId=${serviceId}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ id, lead: values })
+      }
+    )
     return response.json()
   }
 
   const deleteCompany = async (id: string) => {
-    const response = await fetch(`/api/crm/companies/delete?serviceId=${serviceId}`, {
-      method: 'DELETE',
-      body: JSON.stringify({ id })
-    })
+    const response = await fetch(
+      `/api/crm/companies/delete?consumerId=${session?.consumerId}&serviceId=${serviceId}`,
+      {
+        method: 'DELETE',
+        body: JSON.stringify({ id })
+      }
+    )
     return response.json()
   }
 

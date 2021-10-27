@@ -14,7 +14,7 @@ const headers = {
   'X-APIDECK-APP-ID': `${process.env.NEXT_PUBLIC_APP_ID}`
 }
 
-export default async (req: VercelRequest, res: VercelResponse) => {
+const createSession = async (req: VercelRequest, res: VercelResponse) => {
   const { body } = req
   const raw = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/vault/sessions`, {
     method: 'POST',
@@ -24,3 +24,5 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   const response = await raw.json()
   res.json(response)
 }
+
+export default createSession

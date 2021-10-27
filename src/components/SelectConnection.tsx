@@ -2,6 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { createVaultSession, useConnection } from 'utils'
 
 import { Connection } from 'types/Connection'
+import Image from 'next/image'
 import Spinner from './Spinner'
 import { swrOptions } from 'constants/swr-options'
 import { useEffect } from 'react'
@@ -85,15 +86,17 @@ const SelectConnection = () => {
               className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-blue-800 bg-blue-100 border border-blue-200 rounded-md group hover:bg-cool-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-cool-gray-100 focus:ring-blue-600"
               style={{ minWidth: 240 }}
             >
-              <div>
+              <div className="flex items-center">
                 {!isLoading && connection?.icon && (
-                  <img
-                    className={`inline-block w-6 h-6 mr-2 rounded-full ${
-                      isLoading ? 'animate-spin opacity-20' : ''
-                    }`}
-                    src={!isLoading && connection?.icon ? connection?.icon : '/img/logo.png'}
-                    alt=""
-                  />
+                  <div className="w-6 h-6 mr-2">
+                    <Image
+                      className={`rounded-full ${isLoading ? 'animate-spin opacity-20' : ''}`}
+                      src={!isLoading && connection?.icon ? connection?.icon : '/img/logo.png'}
+                      alt={connection.name}
+                      height={28}
+                      width={28}
+                    />
+                  </div>
                 )}
                 {isLoading && <Spinner className="w-6 h-6" />}
                 {!isLoading && <span>{connection?.name || 'Select integration'}</span>}
@@ -133,11 +136,15 @@ const SelectConnection = () => {
                               connection.enabled ? '' : 'opacity-60'
                             }`}
                           >
-                            <img
-                              className="flex-shrink-0 w-6 h-6 m-2 rounded-full"
-                              src={connection.icon}
-                              alt=""
-                            />
+                            <div className="flex p-2">
+                              <Image
+                                className="rounded-sm"
+                                src={connection.icon}
+                                alt={connection.name}
+                                height={28}
+                                width={28}
+                              />
+                            </div>
                             <span className="flex-1 min-w-0">
                               <span className="text-sm font-medium text-gray-900 truncate">
                                 {connection.name}

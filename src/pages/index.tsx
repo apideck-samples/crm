@@ -15,7 +15,7 @@ interface Props {
 const IndexPage = ({ jwt, token }: Props) => {
   const { connection } = useConnection()
   const { session, setSession } = useSession()
-  const { isError, leads } = useLeads()
+  const { isError, leads, isLoading } = useLeads()
   const redirectUrl = connection?.service_id
     ? `https://vault.apideck.com/integrations/crm/${connection?.service_id}/enable`
     : undefined
@@ -45,7 +45,7 @@ const IndexPage = ({ jwt, token }: Props) => {
           </div>
         </div>
       )}
-      {connection ? (
+      {connection || isLoading ? (
         <Leads />
       ) : (
         <div className="text-center">

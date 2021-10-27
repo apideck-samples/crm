@@ -25,21 +25,20 @@ This project uses the CRM API with the Node SDK. Visit https://developers.apidec
 - Copy `.env.example` and create a `.env.local` file
 - Add your API key: `NEXT_PUBLIC_API_KEY=<your-api-key>`
 - Add your Application ID: `NEXT_PUBLIC_APP_ID=<your-app-id>`
-- Your env should also include `NEXT_PUBLIC_CONSUMER_ID=test-consumer`
 - Your env should also include `NEXT_PUBLIC_API_URL=https://unify.apideck.com`
-- Optional: If you do not want to scope this application to your Apideck account, you can change the consumer ID. The consumer ID gives you the flexibility to build completely independent or multi-tenant apps.
+- Your env could include `NEXT_PUBLIC_CONSUMER_ID=test-consumer`, but if you don't want to scope this application to a single consumer, you should use a unique user identifier as consumer ID. You can provide a consumer ID when [creating a session](https://developers.apideck.com/apis/vault/reference#operation/sessionsCreate) by passing the `x-apideck-consumer-id` header.
 
 #### Step 2: Install dependencies
 
 - Install dependencies with `yarn` or `npm install`
 - Run the development server with `yarn dev` or `npm run dev`
-- Visit `http://localhost:3000/` to see if it's running. If you haven't configured any integrations yet you will see a message.
+- Visit `http://localhost:3000/` to see if it's running. If you haven't configured any integrations you will see a message.
 
 #### Step 3: Create a Vault session and add connections
 
-You need to create a Vault session and add/configure at least one CRM connection. You can do this by clicking the `Integrations settings` button in the navbar. This will redirect you to the [Integration Settings](https://github.com/apideck-samples/integration-settings) app that gives you a UI to configure CRM connections.
+You need to create a Vault session and add/configure at least one CRM connection. You can do this by clicking the `Integrations settings` button in the navbar. This button will redirect you to the [Integration Settings](https://github.com/apideck-samples/integration-settings) app that gives you a UI to configure CRM connections.
 
-After you have successfully configured a CRM connection, you can use the `Return to application` link to return to `localhost:3000`. You can change the return URL inside the `VaultSessionButton`.
+After configuring at least one CRM connection, you can use the `Return to application` link to return to `localhost:3000`. You can change the return URL by providing a `redirect_uri` while creating a session.
 
 You should now be able to load and manage the leads of the connection you have configured.
 

@@ -55,15 +55,12 @@ const Layout = ({
             <p className="mt-1 mb-4 text-sm text-gray-500">
               You need a valid session to use the Apideck CRM
             </p>
-
-            {process.env.NODE_ENV === 'development' ? (
-              <Button
-                onClick={createSession}
-                text="Create test session (dev only)"
-                isLoading={isLoading}
-                variant="outline"
-              />
-            ) : null}
+            <Button
+              onClick={createSession}
+              text="Create a test session"
+              isLoading={isLoading}
+              variant="outline"
+            />
           </div>
         ) : (
           children

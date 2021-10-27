@@ -3,7 +3,6 @@ import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useStat
 import { Session } from 'types/Session'
 import { createVaultSession } from './createVaultSession'
 import { useRouter } from 'next/router'
-import { useStickyState } from './useStickyState'
 
 interface ContextProps {
   createSession: () => Promise<void>

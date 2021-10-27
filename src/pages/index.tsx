@@ -2,6 +2,7 @@ import Layout from '../components/Layout'
 import Leads from 'components/leads/Leads'
 import { Session } from 'types/Session'
 import VaultSessionButton from 'components/VaultSessionButton'
+import { applySession } from 'next-session'
 import { useConnection } from 'utils'
 import { useEffect } from 'react'
 import { useLeads } from 'utils/useLeads'
@@ -64,6 +65,17 @@ const IndexPage = ({ jwt, token }: Props) => {
       )}
     </Layout>
   )
+}
+
+export const getServerSideProps = async ({ req, res }: any): Promise<any> => {
+  await applySession(req, res, { name: 'apideck_vault' })
+
+  return {
+    props: {
+      jwt: req.session?.jwt || '',
+      token: req.session?.token || {}
+    }
+  }
 }
 
 export default IndexPage

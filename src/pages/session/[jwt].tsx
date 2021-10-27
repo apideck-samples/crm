@@ -1,11 +1,11 @@
 import { Session } from 'types/Session'
+import { applySession } from 'next-session'
 import camelCaseKeys from 'camelcase-keys-deep'
 import { decode } from 'jsonwebtoken'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useSession } from 'utils/useSession'
 import { useToast } from '@apideck/components'
-
 interface Props {
   session: Session
 }
@@ -31,14 +31,22 @@ const SessionPage = ({ session }: Props) => {
   return <div />
 }
 
-export async function getServerSideProps({ query }: any): Promise<any> {
+export async function getServerSideProps({ req, res, query }: any): Promise<any> {
+  await applySession(req, res, { name: 'apideck_vault' })
+
   const { jwt } = query
+  req.session.jwt = jwt
+
   const decoded = decode(jwt) as Session
-  const token = camelCaseKeys(decoded)
+  if (decoded) {
+    req.session.token = camelCaseKeys(decoded)
+  }
+
+  if (!req.session.token) return { props: {} }
 
   return {
     props: {
-      session: { ...token, jwt }
+      session: { ...req.session.token, jwt: req.session.jwt }
     }
   }
 }

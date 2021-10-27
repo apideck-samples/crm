@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useState } from 'react'
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from 'react'
 
 import { Session } from 'types/Session'
 import { createVaultSession } from './createVaultSession'
@@ -7,15 +7,15 @@ import { useStickyState } from './useStickyState'
 
 interface ContextProps {
   createSession: () => Promise<void>
-  setSession: (session: Session) => void
-  session?: Session
+  setSession: Dispatch<SetStateAction<Session | null>>
+  session: Session | null
   isLoading: boolean
 }
 
 const SessionContext = createContext<Partial<ContextProps>>({})
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
-  const [session, setSession] = useStickyState(null, 'session')
+  const [session, setSession] = useState<Session | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { push } = useRouter()
 

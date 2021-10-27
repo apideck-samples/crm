@@ -33,9 +33,9 @@ const IndexPage = ({ jwt, token }: Props) => {
           <h3 className="text-lg font-medium leading-6 text-gray-900">{leads?.error}</h3>
           <div className="mt-2 sm:flex sm:items-start sm:justify-between">
             <div className="max-w-xl text-sm text-gray-500">
-              <p>{leads?.detail}</p>
+              <p>{leads?.message}</p>
             </div>
-            {leads?.statusCode === 401 && connection?.service_id && (
+            {leads?.status_code === 401 && connection?.service_id && (
               <VaultSessionButton
                 text={`Authorize ${connection?.name}`}
                 variant="primary"

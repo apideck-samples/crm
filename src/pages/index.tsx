@@ -22,7 +22,7 @@ const IndexPage = ({ jwt, token }: Props) => {
     : undefined
 
   useEffect(() => {
-    if (!session && token) {
+    if (!session && jwt?.length) {
       setSession({ ...token, jwt })
     }
   }, [jwt, session, setSession, token])

@@ -5,7 +5,7 @@ import fetch from 'node-fetch'
 // If not provided create a random consumer ID for demo purposes
 const consumerId =
   process.env.NEXT_PUBLIC_CONSUMER_ID ||
-  `demo-${Math.random().toString(36).substring(7)}-${new Date().toISOString()}`
+  `demo-crm-${Math.random().toString(36).substring(7)}-${new Date().toISOString()}`
 
 const headers = {
   'Content-Type': 'application/json',

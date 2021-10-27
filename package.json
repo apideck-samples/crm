@@ -18,9 +18,9 @@
     "@apideck/components": "^0.6.8",
     "@apideck/node": "^0.2.0",
     "@headlessui/react": "^1.4.1",
-    "@testing-library/dom": "^7.30.0",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
+    "@testing-library/dom": "^8.10.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.2",
     "@types/jest": "^26.0.20",
     "babel-jest": "^26.6.3",
     "camelcase-keys-deep": "^0.1.0",
@@ -31,7 +31,7 @@
     "react-dom": "17.0.2",
     "react-hook-form": "^6.15.4",
     "react-table": "^7.6.3",
-    "swr": "^0.5.3"
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "@tailwindcss/ui": "^0.7.2",

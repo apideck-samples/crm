@@ -45,7 +45,7 @@ const IndexPage = ({ jwt, token }: Props) => {
           </div>
         </div>
       )}
-      {connection || isLoading ? (
+      {connection ? (
         <Leads />
       ) : (
         <div className="text-center">

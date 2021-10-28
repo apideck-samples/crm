@@ -1,6 +1,7 @@
-import { Dispatch, ReactNode, createContext, useContext, useState } from 'react'
+import { Dispatch, ReactNode, createContext, useContext } from 'react'
 
 import { Connection } from 'types/Connection'
+import { useStickyState } from './useStickyState'
 
 interface ContextProps {
   setConnection: Dispatch<Connection>
@@ -10,7 +11,7 @@ interface ContextProps {
 const ConnectorContext = createContext<Partial<ContextProps>>({})
 
 export const ConnectorProvider = ({ children }: { children: ReactNode }) => {
-  const [connection, setConnection] = useState<Connection | null>(null)
+  const [connection, setConnection] = useStickyState(null, 'connection')
 
   return (
     <ConnectorContext.Provider value={{ setConnection, connection }}>

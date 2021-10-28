@@ -23,17 +23,17 @@ const SelectConnection = () => {
   }
 
   const { data: connections, error } = useSWR(
-    `/api/vault/connections?consumerId=${session?.consumerId}`,
+    session?.jwt ? `/api/vault/connections?jwt=${session?.jwt}` : null,
     getConnections,
     swrOptions
   )
-  const isLoading = !connections && !error
+  const isLoading = session && !connections && !error
   const callableConnections = connections?.data?.filter(
     (connection: Connection) => connection.state === 'callable'
   )
 
   useEffect(() => {
-    if (leads?.service && callableConnections.length && !connection) {
+    if (leads?.service && callableConnections?.length && !connection) {
       const connector = callableConnections.find(
         (connection: Connection) => connection.service_id === leads?.service
       )

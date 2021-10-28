@@ -6,15 +6,15 @@ import { init } from '../../_utils'
 interface Params {
   serviceId?: string
   cursor?: string
-  consumerId?: string
+  jwt?: string
 }
 
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
-  const { consumerId, serviceId, cursor }: Params = req.query
-  const apideck = init(consumerId)
+  const { jwt, serviceId, cursor }: Params = req.query
+  const apideck = init(jwt)
 
-  const result: Promise<GetLeadsResponse> = await apideck.crm.leads
-    .list({ limit: 20, serviceId, cursor })
+  const result: Promise<GetLeadsResponse> = await apideck.crm
+    .leadsAll({ limit: 20, serviceId, cursor })
     .catch(async (error: Response) => await error.json())
 
   res.json(result)

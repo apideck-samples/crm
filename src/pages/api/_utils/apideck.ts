@@ -1,9 +1,18 @@
 import { Apideck } from '@apideck/node'
+import { Session } from 'types/Session'
+import camelcaseKeysDeep from 'camelcase-keys-deep'
+import { decode } from 'jsonwebtoken'
 
-export const init = (consumerId?: string) => {
+export const init = (jwt?: string) => {
+  const decoded: any = decode(jwt as string)
+  const { applicationId, consumerId } = camelcaseKeysDeep(decoded) as Session
+
+  console.log('consumerId', consumerId)
+  console.log('applicationId', applicationId)
+
   return new Apideck({
-    apiKey: process.env.NEXT_PUBLIC_API_KEY,
-    applicationId: `${process.env.NEXT_PUBLIC_APP_ID}`,
+    apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
+    appId: `${applicationId}`,
     consumerId
   })
 }

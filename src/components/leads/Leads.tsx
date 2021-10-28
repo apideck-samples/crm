@@ -20,9 +20,9 @@ const Leads: FC = () => {
     const data = {
       ...lead,
       email: lead.emails?.length ? lead.emails[0].email : '',
-      phone: lead.phoneNumbers?.length ? lead.phoneNumbers[0].number : '',
-      createdAt: lead?.createdAt
-        ? new Date(lead.createdAt).toLocaleDateString(undefined, {
+      phone: lead.phone_numbers?.length ? lead.phone_numbers[0].number : '',
+      createdAt: lead?.created_at
+        ? new Date(lead.created_at).toLocaleDateString(undefined, {
             year: 'numeric',
             month: 'short',
             day: 'numeric'

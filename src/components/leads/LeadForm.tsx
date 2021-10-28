@@ -3,7 +3,6 @@ import { CreateLeadResponse, DeleteLeadResponse, Lead, UpdateLeadResponse } from
 import { useEffect, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
-import { LeadResponse } from 'types/LeadResponse'
 import { mutate } from 'swr'
 import { useLeads } from 'utils'
 

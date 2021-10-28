@@ -7,9 +7,6 @@ export const init = (jwt?: string) => {
   const decoded: any = decode(jwt as string)
   const { applicationId, consumerId } = camelcaseKeysDeep(decoded) as Session
 
-  console.log('consumerId', consumerId)
-  console.log('applicationId', applicationId)
-
   return new Apideck({
     apiKey: `${process.env.NEXT_PUBLIC_API_KEY}`,
     appId: `${applicationId}`,

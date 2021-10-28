@@ -12,10 +12,6 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
   const { jwt, serviceId }: Params = req.query
   const apideck = init(jwt)
 
-  console.log('serviceId', serviceId)
-  console.log('id', id)
-  console.log('company', company)
-
   const result = await apideck.crm
     .companiesUpdate({ serviceId, id, company })
     .catch(async (error: Response) => await error.json())

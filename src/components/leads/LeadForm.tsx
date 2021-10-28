@@ -1,9 +1,8 @@
 import { Button, TextInput, useModal, useToast } from '@apideck/components'
+import { CreateLeadResponse, DeleteLeadResponse, Lead, UpdateLeadResponse } from '@apideck/node'
 import { useEffect, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 
-import { Lead } from '@apideck/node'
-import { LeadResponse } from 'types/LeadResponse'
 import { mutate } from 'swr'
 import { useLeads } from 'utils'
 
@@ -28,7 +27,7 @@ const LeadForm = ({ defaultValues }: Props) => {
   })
   const { fields: phoneNumbers, append: appendNumber, remove: removeNumber } = useFieldArray({
     control,
-    name: 'phoneNumbers',
+    name: 'phone_numbers',
     keyName: 'key'
   })
   const leadID = defaultValues?.id
@@ -38,26 +37,33 @@ const LeadForm = ({ defaultValues }: Props) => {
       const emailsValue = defaultValues?.emails?.length
         ? defaultValues?.emails
         : [{ type: 'primary' }]
-      const phoneNumbersValue = defaultValues?.phoneNumbers?.length
-        ? defaultValues?.phoneNumbers
+      const phoneNumbersValue = defaultValues?.phone_numbers?.length
+        ? defaultValues?.phone_numbers
         : [{ type: 'primary' }]
 
       setValue('emails', emailsValue)
-      setValue('phoneNumbers', phoneNumbersValue)
+      setValue('phone_numbers', phoneNumbersValue)
     }
 
     initializeArrayFields()
-  }, [defaultValues?.emails, defaultValues?.phoneNumbers, setValue])
+  }, [defaultValues?.emails, defaultValues?.phone_numbers, setValue])
 
   const onSubmit = (values: Lead) => {
     setIsLoading(true)
     setError(null)
 
-    const response: Promise<LeadResponse> = leadID ? updateLead(leadID, values) : createLead(values)
+    values = {
+      ...values,
+      phone_numbers: values.phone_numbers?.filter((phone) => phone.number?.length)
+    }
+
+    const response: Promise<CreateLeadResponse | UpdateLeadResponse> = leadID
+      ? updateLead(leadID, values)
+      : createLead(values)
 
     response
-      .then((response: LeadResponse) => {
-        if (response.statusCode === 200 || response.statusCode === 201) {
+      .then((response) => {
+        if (response.status_code === 200 || response.status_code === 201) {
           mutate(getLeadsUrl)
           removeModal()
           addToast({
@@ -67,7 +73,7 @@ const LeadForm = ({ defaultValues }: Props) => {
             autoClose: true
           })
         } else {
-          const { error, message, detail } = response
+          const { error, message, detail } = response as any
           setError(message || error)
           console.log(detail)
         }
@@ -82,8 +88,8 @@ const LeadForm = ({ defaultValues }: Props) => {
     setIsDeleting(true)
     setError(null)
     deleteLead(id)
-      .then((response: LeadResponse) => {
-        if (response.statusCode === 200) {
+      .then((response: DeleteLeadResponse) => {
+        if (response.status_code === 200) {
           mutate(getLeadsUrl)
           removeModal()
           addToast({
@@ -93,7 +99,7 @@ const LeadForm = ({ defaultValues }: Props) => {
             autoClose: true
           })
         } else {
-          const { error, message, detail } = response
+          const { error, message, detail } = response as any
           setError(message || error)
           console.log(detail)
         }
@@ -115,19 +121,19 @@ const LeadForm = ({ defaultValues }: Props) => {
             <span>{error}</span>
           </div>
         )}
-        <label htmlFor="companyName" className="block text-sm font-medium leading-5 text-gray-700">
+        <label htmlFor="company_name" className="block text-sm font-medium leading-5 text-gray-700">
           Company name
         </label>
         <TextInput
           className="mt-1"
-          name="companyName"
+          name="company_name"
           required
           ref={register({
             required: 'Please enter an company name'
           })}
         />
-        {errors.companyName && (
-          <div className="mt-2 text-xs text-red-600">{errors.companyName.message}</div>
+        {errors.company_name && (
+          <div className="mt-2 text-xs text-red-600">{errors.company_name.message}</div>
         )}
         <div className="mt-4">
           <label htmlFor="name" className="block text-sm font-medium leading-5 text-gray-700">
@@ -206,7 +212,7 @@ const LeadForm = ({ defaultValues }: Props) => {
 
         <div className="mt-4">
           <label
-            htmlFor="phoneNumbers"
+            htmlFor="phone_numbers"
             className="block text-sm font-medium leading-5 text-gray-700"
           >
             Phone numbers
@@ -215,7 +221,7 @@ const LeadForm = ({ defaultValues }: Props) => {
             return (
               <div className="mt-2" key={`phone-${index}`}>
                 <TextInput
-                  name={`phoneNumbers[${index}].number`}
+                  name={`phone_numbers[${index}].number`}
                   ref={register()}
                   placeholder={`Phone number ${
                     phone.type === 'primary' ? '(primary)' : '(secondary)'
@@ -223,7 +229,7 @@ const LeadForm = ({ defaultValues }: Props) => {
                 />
                 <input
                   type="hidden"
-                  name={`phoneNumbers[${index}].type`}
+                  name={`phone_numbers[${index}].type`}
                   value={phone.type || 'secondary'}
                   ref={register()}
                   readOnly
@@ -231,15 +237,15 @@ const LeadForm = ({ defaultValues }: Props) => {
                 {phone.id && (
                   <input
                     type="hidden"
-                    name={`phoneNumbers[${index}].id`}
+                    name={`phone_numbers[${index}].id`}
                     ref={register()}
                     value={phone.id}
                     readOnly
                   />
                 )}
-                {errors.phoneNumbers?.length && errors.phoneNumbers[index] && (
+                {errors.phone_numbers?.length && errors.phone_numbers[index] && (
                   <div className="mt-2 text-xs text-red-600">
-                    {errors.phoneNumbers?.length && errors.phoneNumbers[index]?.number?.message}
+                    {errors.phone_numbers?.length && errors.phone_numbers[index]?.number?.message}
                   </div>
                 )}
               </div>

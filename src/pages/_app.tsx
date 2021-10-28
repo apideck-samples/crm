@@ -8,14 +8,14 @@ import { SessionProvider } from 'utils/useSession'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
-    <SessionProvider>
-      <ConnectorProvider>
-        <ToastProvider>
+    <ToastProvider>
+      <SessionProvider>
+        <ConnectorProvider>
           <ModalProvider>
             <Component {...pageProps} />
           </ModalProvider>
-        </ToastProvider>
-      </ConnectorProvider>
-    </SessionProvider>
+        </ConnectorProvider>
+      </SessionProvider>
+    </ToastProvider>
   )
 }

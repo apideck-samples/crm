@@ -1,7 +1,11 @@
 import { Button, TextInput, useModal, useToast } from '@apideck/components'
+import {
+  Company,
+  CreateCompanyResponse,
+  DeleteCompanyResponse,
+  UpdateCompanyResponse
+} from '@apideck/node'
 
-import { Company } from '@apideck/node'
-import { CompanyResponse } from 'types/CompanyResponse'
 import { mutate } from 'swr'
 import { useCompanies } from 'utils'
 import { useForm } from 'react-hook-form'
@@ -28,13 +32,13 @@ const CompanyForm = ({ defaultValues }: Props) => {
     setIsLoading(true)
     setError(null)
 
-    const response: Promise<CompanyResponse> = companyID
+    const response: Promise<UpdateCompanyResponse | CreateCompanyResponse> = companyID
       ? updateCompany(companyID, values)
       : createCompany(values)
 
     response
-      .then((response: CompanyResponse) => {
-        if (response.statusCode === 200 || response.statusCode === 201) {
+      .then((response) => {
+        if (response.status_code === 200 || response.status_code === 201) {
           mutate(getCompaniesUrl)
           removeModal()
           addToast({
@@ -44,7 +48,7 @@ const CompanyForm = ({ defaultValues }: Props) => {
             autoClose: true
           })
         } else {
-          const { error, message, detail } = response
+          const { error, message, detail } = response as any
           setError(message || error)
           console.log(detail)
         }
@@ -59,8 +63,8 @@ const CompanyForm = ({ defaultValues }: Props) => {
     setIsDeleting(true)
     setError(null)
     deleteCompany(id)
-      .then((response: CompanyResponse) => {
-        if (response.statusCode === 200) {
+      .then((response: DeleteCompanyResponse) => {
+        if (response.status_code === 200) {
           mutate(getCompaniesUrl)
           removeModal()
           addToast({
@@ -70,7 +74,7 @@ const CompanyForm = ({ defaultValues }: Props) => {
             autoClose: true
           })
         } else {
-          const { error, message, detail } = response
+          const { error, message, detail } = response as any
           setError(message || error)
           console.log(detail)
         }
@@ -112,6 +116,19 @@ const CompanyForm = ({ defaultValues }: Props) => {
             })}
           />
           {errors.name && <div className="mt-2 text-xs text-red-600">{errors.name.message}</div>}
+        </div>
+
+        <div className="mt-4">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 Companying-5"
+          >
+            Description
+          </label>
+          <TextInput className="mt-1" name="description" ref={register()} />
+          {errors.description && (
+            <div className="mt-2 text-xs text-red-600">{errors.description.message}</div>
+          )}
         </div>
 
         <div className="mt-4">

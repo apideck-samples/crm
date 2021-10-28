@@ -25,7 +25,7 @@ export const useCompanies = () => {
   const cursorParams =
     cursor && (!prevServiceId || prevServiceId === serviceId) ? `&cursor=${cursor}` : ''
   const getCompaniesUrl = serviceId
-    ? `/api/crm/companies/get?consumerId=${session?.consumerId}&serviceId=${serviceId}${cursorParams}`
+    ? `/api/crm/companies/get?jwt=${session?.jwt}&serviceId=${serviceId}${cursorParams}`
     : null
   const { data, error, revalidate } = useSWR(getCompaniesUrl, fetcher, swrOptions)
 
@@ -37,7 +37,7 @@ export const useCompanies = () => {
 
   const createCompany = async (values: Company) => {
     const response = await fetch(
-      `/api/crm/companies/post?consumerId=${session?.consumerId}&serviceId=${serviceId}`,
+      `/api/crm/companies/post?jwt=${session?.jwt}&serviceId=${serviceId}`,
       {
         method: 'POST',
         body: JSON.stringify(values)
@@ -48,10 +48,10 @@ export const useCompanies = () => {
 
   const updateCompany = async (id: string, values: Company) => {
     const response = await fetch(
-      `/api/crm/companies/patch?consumerId=${session?.consumerId}&serviceId=${serviceId}`,
+      `/api/crm/companies/patch?jwt=${session?.jwt}&serviceId=${serviceId}`,
       {
         method: 'PATCH',
-        body: JSON.stringify({ id, lead: values })
+        body: JSON.stringify({ id, company: values })
       }
     )
     return response.json()
@@ -59,7 +59,7 @@ export const useCompanies = () => {
 
   const deleteCompany = async (id: string) => {
     const response = await fetch(
-      `/api/crm/companies/delete?consumerId=${session?.consumerId}&serviceId=${serviceId}`,
+      `/api/crm/companies/delete?jwt=${session?.jwt}&serviceId=${serviceId}`,
       {
         method: 'DELETE',
         body: JSON.stringify({ id })

@@ -3,14 +3,15 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
 import { init } from '../../_utils'
 
 interface Params {
-  consumerId?: string
+  jwt?: string
+  serviceId?: string
 }
 
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
   const { id } = JSON.parse(req.body)
-  const { consumerId }: Params = req.query
-  const apideck = init(consumerId)
+  const { jwt, serviceId }: Params = req.query
+  const apideck = init(jwt)
 
-  const result = await apideck.crm.leads.delete({ id }).catch((error: Response) => error)
+  const result = await apideck.crm.leadsDelete({ serviceId, id }).catch((error: Response) => error)
   res.json(result)
 }

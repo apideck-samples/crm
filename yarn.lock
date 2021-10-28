@@ -10,12 +10,12 @@
     "@tailwindcss/forms" "^0.3.3"
     deepmerge "4.2.2"
 
-"@apideck/node@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@apideck/node/-/node-0.2.0.tgz#255a59e04b25f9cff1a0cd1284a54d793067801c"
-  integrity sha512-3+bbP0uMf+2ZZota5Q4zLdTMdJlhzw6NxIR6CfXBegmCIId4HLydETN2nmfLBpc9FjKe1GuT2F9HSgaukkp+/w==
+"@apideck/node@^1.0.0-beta.29":
+  version "1.0.0-beta.29"
+  resolved "https://registry.yarnpkg.com/@apideck/node/-/node-1.0.0-beta.29.tgz#6195040afc980ac3f0ff497df458e6b5096f20a2"
+  integrity sha512-2hqagrJJggMFrkwpcXUr13OpiDsQ7wqSjez6XhYDRA2Nyw92C9/eJNC7zA6J6uaSQd45sF1i9cD8U4vYsSaO9Q==
   dependencies:
-    node-fetch "^2.6.1"
+    node-fetch apideck-io/node-fetch#2.x
 
 "@babel/code-frame@7.12.11":
   version "7.12.11"
@@ -5058,6 +5058,12 @@ node-fetch@2.6.1, node-fetch@^2.6.1:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
+"node-fetch@github:apideck-io/node-fetch#2.x":
+  version "2.6.5"
+  resolved "https://codeload.github.com/apideck-io/node-fetch/tar.gz/42cbbfed4ed8224f1c8d374f7de4f6c9adeac017"
+  dependencies:
+    whatwg-url "^5.0.0"
+
 node-html-parser@1.4.9:
   version "1.4.9"
   resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-1.4.9.tgz#3c8f6cac46479fae5800725edb532e9ae8fd816c"
@@ -6825,6 +6831,11 @@ tr46@^2.0.2:
   dependencies:
     punycode "^2.1.1"
 
+tr46@~0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
+  integrity sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
+
 traverse@^0.6.6:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
@@ -7115,6 +7126,11 @@ web-streams-polyfill@3.0.3:
   resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-3.0.3.tgz#f49e487eedeca47a207c1aee41ee5578f884b42f"
   integrity sha512-d2H/t0eqRNM4w2WvmTdoeIvzAUSpK7JmATB8Nr2lb7nQ9BTIJVjbQ/TRFVEh2gUH1HwclPdoPtfMoFfetXaZnA==
 
+webidl-conversions@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
+  integrity sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE=
+
 webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
@@ -7141,6 +7157,14 @@ whatwg-mimetype@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/whatwg-mimetype/-/whatwg-mimetype-2.3.0.tgz#3d4b1e0312d2079879f826aff18dbeeca5960fbf"
   integrity sha512-M4yMwr6mAnQz76TbJm914+gPpB/nCwvZbJU28cUD6dR004SAxDLOOSUaB1JDRqLtaOV/vi0IC5lEAGFgrjGv/g==
+
+whatwg-url@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-5.0.0.tgz#966454e8765462e37644d3626f6742ce8b70965d"
+  integrity sha1-lmRU6HZUYuN2RNNib2dCzotwll0=
+  dependencies:
+    tr46 "~0.0.3"
+    webidl-conversions "^3.0.0"
 
 whatwg-url@^7.0.0:
   version "7.1.0"

@@ -34,9 +34,9 @@ const Companies: FC = () => {
     const data = {
       ...company,
       email: company.emails?.length ? company.emails[0].email : '',
-      phone: company.phoneNumbers?.length ? company.phoneNumbers[0].number : '',
-      createdAt: company?.createdAt
-        ? new Date(company.createdAt).toLocaleDateString(undefined, {
+      phone: company.phone_numbers?.length ? company.phone_numbers[0].number : '',
+      createdAt: company?.created_at
+        ? new Date(company.created_at).toLocaleDateString(undefined, {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
@@ -68,7 +68,18 @@ const Companies: FC = () => {
             />
           </div>
         )}
-        {!isLoading && hasLeads && <Table columns={columns} data={mappedData} />}
+        {!isLoading && hasLeads && (
+          <Table
+            columns={columns}
+            data={mappedData}
+            actionText="Edit"
+            action={(props: any) =>
+              addModal(<CompanyForm defaultValues={props} />, {
+                style: { maxWidth: 480 }
+              })
+            }
+          />
+        )}
         {(hasLeads || isLoading) && (
           <div className="flex flex-row-reverse py-4 border-gray-200">
             {hasNextPage && (

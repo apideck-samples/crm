@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@apideck/components@^0.6.8":
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/@apideck/components/-/components-0.6.8.tgz#1c52061491837d24c9ff8cc4ab4314098d58127e"
-  integrity sha512-OJk5wMALaHal89yL5KxR/CQU6TPcou72gb+csxDJEC61Izf1Mxei1JR9zKZvHhCnQCTLdl9mvUI4Icghop3QVg==
+"@apideck/components@^0.6.9":
+  version "0.6.11"
+  resolved "https://registry.yarnpkg.com/@apideck/components/-/components-0.6.11.tgz#76dbd4b1cf3030f9744b77c1511fabe3f5c17a8c"
+  integrity sha512-daWM3jV5V2sOj7hCmVzPoJBvsl8wxPMD32kMW0b6KCz110SBfIePbF7gr/LPkqQfCGJ8o6z6rZvSfR2Vwi3UXA==
   dependencies:
     "@tailwindcss/forms" "^0.3.3"
     deepmerge "4.2.2"
@@ -5058,7 +5058,7 @@ node-fetch@2.6.1, node-fetch@^2.6.1:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
-"node-fetch@github:apideck-io/node-fetch#2.x":
+node-fetch@apideck-io/node-fetch#2.x:
   version "2.6.5"
   resolved "https://codeload.github.com/apideck-io/node-fetch/tar.gz/42cbbfed4ed8224f1c8d374f7de4f6c9adeac017"
   dependencies:

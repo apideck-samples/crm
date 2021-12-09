@@ -10,12 +10,12 @@
     "@tailwindcss/forms" "^0.3.3"
     deepmerge "4.2.2"
 
-"@apideck/node@^1.0.0-beta.29":
-  version "1.0.0-beta.29"
-  resolved "https://registry.yarnpkg.com/@apideck/node/-/node-1.0.0-beta.29.tgz#6195040afc980ac3f0ff497df458e6b5096f20a2"
-  integrity sha512-2hqagrJJggMFrkwpcXUr13OpiDsQ7wqSjez6XhYDRA2Nyw92C9/eJNC7zA6J6uaSQd45sF1i9cD8U4vYsSaO9Q==
+"@apideck/node@^1.2.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@apideck/node/-/node-1.5.0.tgz#a5ac087f4ff44f67cd4f20f0df0cd93c149408e5"
+  integrity sha512-hbv1cK4ABVm9bHBH/RD+BJu5DEX5uUT53djwGPAXy8/NP1bFSpodZHhO1+CUwhIigLW3gSGszkHPT1idmrXfLw==
   dependencies:
-    node-fetch apideck-io/node-fetch#2.x
+    node-fetch-commonjs "^3.0.3"
 
 "@babel/code-frame@7.12.11":
   version "7.12.11"
@@ -2967,6 +2967,13 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
+fetch-blob@^3.1.2:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/fetch-blob/-/fetch-blob-3.1.3.tgz#a7dca4855e39d3e3c5a1da62d4ee335c37d26012"
+  integrity sha512-ax1Y5I9w+9+JiM+wdHkhBoxew+zG4AJ2SvAD1v1szpddUIiPERVGBxrMcB2ZqW0Y3PP8bOWYv2zqQq1Jp2kqUQ==
+  dependencies:
+    web-streams-polyfill "^3.0.3"
+
 figures@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/figures/-/figures-3.2.0.tgz#625c18bd293c604dc4a8ddb2febf0c88341746af"
@@ -3082,6 +3089,13 @@ form-data@~2.3.2:
     asynckit "^0.4.0"
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
+
+formdata-polyfill@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/formdata-polyfill/-/formdata-polyfill-4.0.10.tgz#24807c31c9d402e002ab3d8c720144ceb8848423"
+  integrity sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==
+  dependencies:
+    fetch-blob "^3.1.2"
 
 fraction.js@^4.0.13:
   version "4.0.13"
@@ -4977,14 +4991,21 @@ node-emoji@^1.8.1:
   dependencies:
     lodash.toarray "^4.4.0"
 
+node-fetch-commonjs@^3.0.3:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/node-fetch-commonjs/-/node-fetch-commonjs-3.1.1.tgz#e36db76b9fe13bdd44a5bafabc29c61d0f01b4e1"
+  integrity sha512-TgkdVJdiEaauzWwB9NoD4TvHZFtG6KKEffvotWf9WNIyoRZHsCFjGfb3bhkIXrMt3YFgFi8ZApbwWoe1h3XTpA==
+  dependencies:
+    formdata-polyfill "^4.0.10"
+    web-streams-polyfill "^3.1.1"
+
 node-fetch@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
-node-fetch@^2.6.1, node-fetch@apideck-io/node-fetch#2.x:
+node-fetch@^2.6.1:
   version "2.6.5"
-  uid "42cbbfed4ed8224f1c8d374f7de4f6c9adeac017"
   resolved "https://codeload.github.com/apideck-io/node-fetch/tar.gz/42cbbfed4ed8224f1c8d374f7de4f6c9adeac017"
   dependencies:
     whatwg-url "^5.0.0"
@@ -7016,6 +7037,11 @@ watchpack@2.3.0:
   dependencies:
     glob-to-regexp "^0.4.1"
     graceful-fs "^4.1.2"
+
+web-streams-polyfill@^3.0.3, web-streams-polyfill@^3.1.1:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-3.2.0.tgz#a6b74026b38e4885869fb5c589e90b95ccfc7965"
+  integrity sha512-EqPmREeOzttaLRm5HS7io98goBgZ7IVz79aDvqjD0kYXLtFZTc0T/U6wHTPKyIjb+MdN7DFIIX6hgdBEpWmfPA==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

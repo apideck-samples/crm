@@ -776,10 +776,24 @@
     hex-rgb "^4.1.0"
     postcss-selector-parser "^6.0.2"
 
-"@testing-library/dom@^8.0.0", "@testing-library/dom@^8.10.1":
+"@testing-library/dom@^8.0.0":
   version "8.10.1"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.10.1.tgz#e24fed92ad51c619cf304c6f1410b4c76b1000c0"
   integrity sha512-rab7vpf1uGig5efWwsCOn9j4/doy+W3VBoUyzX7C4y77u0wAckwc7R8nyH6e2rw0rRzKJR+gWPiAg8zhiFbxWQ==
+  dependencies:
+    "@babel/code-frame" "^7.10.4"
+    "@babel/runtime" "^7.12.5"
+    "@types/aria-query" "^4.2.0"
+    aria-query "^5.0.0"
+    chalk "^4.1.0"
+    dom-accessibility-api "^0.5.9"
+    lz-string "^1.4.4"
+    pretty-format "^27.0.2"
+
+"@testing-library/dom@^8.11.1":
+  version "8.11.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.11.1.tgz#03fa2684aa09ade589b460db46b4c7be9fc69753"
+  integrity sha512-3KQDyx9r0RKYailW2MiYrSSKEfH0GTkI51UGEvJenvcoDoeRYs0PZpi2SXqtnMClQvCqdtTTpOfFETDTVADpAg==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/runtime" "^7.12.5"
@@ -4984,7 +4998,6 @@ node-fetch@2.6.1:
 
 node-fetch@^2.6.1, node-fetch@apideck-io/node-fetch#2.x:
   version "2.6.5"
-  uid "42cbbfed4ed8224f1c8d374f7de4f6c9adeac017"
   resolved "https://codeload.github.com/apideck-io/node-fetch/tar.gz/42cbbfed4ed8224f1c8d374f7de4f6c9adeac017"
   dependencies:
     whatwg-url "^5.0.0"

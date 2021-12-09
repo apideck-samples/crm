@@ -18,7 +18,7 @@
     "@apideck/components": "^0.6.8",
     "@apideck/node": "^1.0.0-beta.29",
     "@headlessui/react": "^1.4.1",
-    "@testing-library/dom": "^8.10.1",
+    "@testing-library/dom": "^8.11.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^26.0.20",

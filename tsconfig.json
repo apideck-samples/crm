@@ -30,5 +30,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ]
+  ],
+  "paths": {
+    "react": [ "./node_modules/@types/react" ]
+  }
 }

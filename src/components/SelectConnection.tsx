@@ -31,16 +31,15 @@ const SelectConnection = () => {
   )
 
   const isLoading = session && !connections && !error
-  // console.log(connections, 'connection select')
-  console.log(connections, 'connections')
+
 
   const callableConnections = connections?.data?.filter(
     (connection: Connection) => connection.state === 'available'
   )
-  console.log(callableConnections, 'callableConnections')
+
 
   useEffect(() => {
-    console.log(leads, 'leads')
+ 
     if (leads?.service && callableConnections?.length && !connection) {
       const connector = callableConnections.find(
         (connection: Connection) => connection.service_id === leads?.service

@@ -28,6 +28,6 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
   const raw = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/vault/connections?api=crm`, {
     headers
   })
-  console.log(raw.data, 'raw')
+
   res.json(raw.data)
 }

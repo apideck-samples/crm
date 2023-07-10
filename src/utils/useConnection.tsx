@@ -12,7 +12,7 @@ const ConnectorContext = createContext<Partial<ContextProps>>({})
 
 export const ConnectorProvider = ({ children }: { children: ReactNode }) => {
   const [connection, setConnection] = useStickyState(null, 'connection')
-  console.log(connection, 'useConnection')
+
   return (
     <ConnectorContext.Provider value={{ setConnection, connection }}>
       {children}

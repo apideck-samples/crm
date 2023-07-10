@@ -15,7 +15,8 @@ export const useCompanies = () => {
   const serviceId = connection?.service_id || ''
   const prevServiceId = usePrevious(serviceId)
   const prevCursor = usePrevious(cursor)
-
+  console.log(connection, 'connection')
+  console.log(serviceId, 'serviceId1')
   const fetcher = async (url: string) => {
     validateEnv()
     const response = await fetch(url)

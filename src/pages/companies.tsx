@@ -19,10 +19,11 @@ const CompaniesPage = ({ jwt, token }: Props) => {
 
   useEffect(() => {
     if (!session && jwt?.length) {
+      console.log(session, 'session')
       setSession({ ...token, jwt })
     }
   }, [jwt, session, setSession, token])
-
+  console.log(session, 'session1')
   return (
     <Layout title={`Companies - ${connection?.name + ' | Apideck CRM'}`} pageHeader="Companies">
       {isError && (

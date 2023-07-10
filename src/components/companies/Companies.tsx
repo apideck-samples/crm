@@ -45,7 +45,7 @@ const Companies: FC = () => {
     }
     return data
   })
-
+  console.log(companies, 'companies')
   useEffect(() => {
     if ((prevStatusCode !== statusCode && statusCode) === 402) {
       addToast({

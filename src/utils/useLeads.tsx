@@ -19,6 +19,7 @@ export const useLeads = () => {
   const fetcher = async (url: string) => {
     validateEnv()
     const response = await fetch(url)
+    console.log(await response.json(), 'response lead')
     return await response.json()
   }
 

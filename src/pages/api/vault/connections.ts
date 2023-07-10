@@ -3,7 +3,8 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
 import { Session } from 'types/Session'
 import camelcaseKeysDeep from 'camelcase-keys-deep'
 import { decode } from 'jsonwebtoken'
-import fetch from 'node-fetch'
+//import fetch from 'node-fetch'
+import axios from 'axios'
 
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
   const { jwt } = req.query
@@ -17,10 +18,16 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     'X-APIDECK-APP-ID': `${applicationId}`
   }
 
-  const raw = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/vault/connections?api=crm`, {
+  // const raw = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/vault/connections?api=crm`, {
+  //   headers
+  // })
+  // const response = await raw.json()
+
+  // res.json(response)
+
+  const raw = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/vault/connections?api=crm`, {
     headers
   })
-  const response = await raw.json()
-
-  res.json(response)
+  console.log(raw.data, 'raw')
+  res.json(raw.data)
 }

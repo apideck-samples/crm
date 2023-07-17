@@ -5,6 +5,7 @@ import { ModalProvider, ToastProvider } from '@apideck/components'
 import { AppProps } from 'next/app'
 import { ConnectorProvider } from 'utils'
 import { SessionProvider } from 'utils/useSession'
+import React from 'react'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (

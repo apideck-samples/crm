@@ -18,8 +18,10 @@ const SelectConnection = () => {
 
   const getConnections = async (url: string) => {
     validateEnv()
+
     const response = await fetch(url)
-    return await response.json()
+    let temp = await response.json()
+    return temp
   }
 
   const { data: connections, error } = useSWR(
@@ -27,12 +29,17 @@ const SelectConnection = () => {
     getConnections,
     swrOptions
   )
+
   const isLoading = session && !connections && !error
+
+
   const callableConnections = connections?.data?.filter(
-    (connection: Connection) => connection.state === 'callable'
+    (connection: Connection) => connection.state === 'available'
   )
 
+
   useEffect(() => {
+ 
     if (leads?.service && callableConnections?.length && !connection) {
       const connector = callableConnections.find(
         (connection: Connection) => connection.service_id === leads?.service
